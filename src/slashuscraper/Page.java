@@ -50,5 +50,15 @@ public class Page {
 	// set content
 	public void setContent(String content) {
 		this.content = content;
-	}	
+	}
+	
+	// overriden toString
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder(
+				"URL:     " + this.url.toString() +
+				"Type:    " + this.type.toString() +
+				"Content: " + this.content.toString());
+		return sb.toString();
+	}
 }

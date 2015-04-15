@@ -16,7 +16,7 @@ public class User {
 	private int linkKarma;		// link karma count
 	private int commentKarma;	// comment karma count
 	
-	private ArrayList<String> trophies;					// list of trophies
+	private ArrayList<String> trophies;				// list of trophies
 	
 	private Hashtable<String, Integer> visitedSubs;	// sub-reddit hit counts
 	private Hashtable<String, Integer> wordsUsed;	// work hit counts
