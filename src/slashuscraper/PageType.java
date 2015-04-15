@@ -1,3 +1,4 @@
+package slashuscraper;
 
 public enum PageType {
 

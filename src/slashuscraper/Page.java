@@ -1,3 +1,5 @@
+package slashuscraper;
+
 import java.net.URL;
 
 /* Container class for web pages */
@@ -9,12 +11,12 @@ public class Page {
 	private String content;	// content
 	
 	// empty constructor
-	Page() {
+	public Page() {
 
 	}
 	
 	// full constructor
-	Page(URL url, PageType type, String content) {
+	public Page(URL url, PageType type, String content) {
 		this.url = url;
 		this.type = type;
 		this.content = content;
