@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class MainMenu {
 	
 	// main method
-	public static void Main(String[] args) {
+	public static void main(String[] args) { // HERE main was Main  
 		
 		String input; 											// user input		
 		ArrayList<String> usernames = new ArrayList<String>(); 	// list of usernames
