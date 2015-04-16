@@ -45,7 +45,7 @@ public class Comment {
 		return this.gilded;
 	}
 
-	// get sub reddit where posted
+	// get subreddit where posted
 	public String getSubreddit() {
 		return subreddit;
 	}
@@ -60,11 +60,11 @@ public class Comment {
 	public String toString() {
 		StringBuilder sb = new StringBuilder(
 				"URL:         " + this.url.toString() +
-				"Date posted: " + this.datePosted.toString() +
-				"Points:      " + this.points +
-				"Gilded:      " + this.gilded +
-				"Sub reddit:  " + this.subreddit.toString() +
-				"Content:     " + this.content.toString());
+				"\nDate posted: " + this.datePosted.toString() +
+				"\nPoints:      " + this.points +
+				"\nGilded:      " + this.gilded +
+				"\nSub reddit:  " + this.subreddit.toString() +
+				"\nContent:     " + this.content.toString());
 		return sb.toString();
 	}
 }
