@@ -32,7 +32,7 @@ public class CommentTest {
 	}
 	
 	@Test
-	public void constructorToString0() throws ParseException, MalformedURLException {
+	public void toStringTest0() throws ParseException, MalformedURLException {
 		URL url = new URL("http://www.reddit.com/");
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
 		String dateInString = "16-04-2015 10:20:56";

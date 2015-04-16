@@ -41,8 +41,8 @@ public class Post extends Comment{
 	public String toString() {
 		StringBuilder sb = new StringBuilder(
 				"Title:       " + this.title.toString() +
-				super.toString() +
-				"Comments:    " + this.comments.size());
+				"\n" + super.toString() +
+				"\nComments:    " + this.comments.size());
 		return sb.toString();
 	}
 }
