@@ -49,15 +49,16 @@ public class MainMenu {
 			// get user input
 			input = sc.nextLine();
 			// split by 'space' into list of username(s)
-			usernames = (ArrayList<String>) Arrays.asList(input.split("\\s+"));
+			usernames = new ArrayList<String> (Arrays.asList(input.split("\\s+"))); // Here
 			// append newline
 			System.out.print("\n");			
 			// close scanner
 			sc.close();
 		}
-		// if usernames were entered, and not errors occurred, continue
+		// if usernames were entered, and no errors occurred, continue
 		if(usernames.size() > 0) {
 			// TODO: scrape information...
+			ScraperManager.scrapeUsers(usernames);
 		}
 	}
 	
