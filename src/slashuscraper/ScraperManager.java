@@ -8,7 +8,7 @@ public class ScraperManager {
 	// Handling multiple users may relate to how load balancing is implemented, which should also be
 	// implemented here
 
-	public static void scrapeUsers(ArrayList<String> usernames) {
+	public static void scrapeUsers(ArrayList<String> usernames) throws InterruptedException {
 		// Call Scraper.scrape(String username) for each username listed in usernames
 		
 		
