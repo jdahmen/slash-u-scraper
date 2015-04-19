@@ -37,18 +37,37 @@ public class Scraper {
 				// For testing
 				System.out.println("Retrieved user: " + username + " page: " + numPagesFetched);
 			
-				// Perform processing here
-			
 				// At this point, the data should be stored permanently into objects, as it will not be available
 				// after the next page is scraped.
 			
 				// Selects everything within the siteTable div. This includes user posts and the neccessary id to
 				// scrape the next page of comments
-				Elements userComments = userPage.select("div#siteTable");
+				//Elements userComments = userPage.select("div#siteTable");
 				// For testing
 				/*for (Element element : userComments) {
 					System.out.println(element);
 				  }*/
+				
+				Elements userCommentsV2 = userPage.select("div[class~=( thing id-)[a-z0-9]+");
+				// For testing
+				System.out.println("Comments ...");
+				for (Element element : userCommentsV2) {
+					System.out.println(element);
+					System.out.println("----------------------------------------------------------------------------------------------------");
+					
+					// Processing should be performed here
+					/*
+					String threadTitle = element.select("").text();
+					String threadTitleURL = "";
+					String threadAuthor = "";
+					String postAuthor = "";
+					String subReddit = "";
+					int numPointsOnPost;
+					String postDateTime = "";
+					String comment = "";
+					// etc
+					 */
+				  }
 				
 				Elements nextPageLink = userPage.select("span[class=nextprev]");
 				// For testing
@@ -100,7 +119,7 @@ public class Scraper {
 				}
 				
 				// Testing
-				//hasNextPage = false;
+				hasNextPage = false;
 			
 			} while (hasNextPage);
 		}
