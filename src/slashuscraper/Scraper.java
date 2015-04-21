@@ -36,22 +36,12 @@ public class Scraper {
 				numPagesFetched++;
 				// For testing
 				System.out.println("Retrieved user: " + username + " page: " + numPagesFetched);
-			
-				// At this point, the data should be stored permanently into objects, as it will not be available
-				// after the next page is scraped.
-			
-				// Selects everything within the siteTable div. This includes user posts and the neccessary id to
-				// scrape the next page of comments
-				//Elements userComments = userPage.select("div#siteTable");
-				// For testing
-				/*for (Element element : userComments) {
-					System.out.println(element);
-				  }*/
 				
+				/*
 				Elements userCommentsV2 = userPage.select("div[class~=( thing id-)[a-z0-9]+");
 				// For testing
 				System.out.println("Comments ...");
-				/*for (Element element : userCommentsV2) {
+				for (Element element : userCommentsV2) {
 					System.out.println(element);
 					System.out.println("----------------------------------------------------------------------------------------------------");
 					
@@ -61,6 +51,7 @@ public class Scraper {
 				
 				// The user being queried created the thread with this post
 				System.out.println("User post is OP");
+				
 				String data_fullname = "";
 				int score_dislikes = 0; 
 				int score_unvoted = 0; 
@@ -108,10 +99,11 @@ public class Scraper {
 					inSubReddit = element.select("a[class~=(subreddit hover).*").get(0).text();
 					System.out.println(inSubReddit);
 					
-					
 					// For testing
 					//System.out.println(element);
 					System.out.println("----------------------------------------------------------------------------------------------------");
+					
+					// Process data here -->
 				}
 				
 				System.out.println("----------------------------------------------------------------------------------------------------");
@@ -122,22 +114,69 @@ public class Scraper {
 				
 				
 				// The user being queried commented on a thread created by another user
-				//System.out.println("User post is in another thread");
+				System.out.println("User post is in another user's thread");
+				
 				data_fullname = "";
-				String threadTitle = "";
+				titleLink = "";
+				titleDescription = "";
 				String threadAuthor = "";
 				inSubReddit = "";
+				String score_dislikesStr = "";
+				String score_unvotedStr = "";
+				String score_likesStr = "";
 				datetime = "";
-				String userComment = "";
 				author = "";
+				String userComment = "";
 				String subRedditTo = "";
 				
 				Elements userPostedInThreads = userPage.select("div[class~=( thing id-).*( comment )$]");
 				
 				for (Element element : userPostedInThreads) {
+					
+					data_fullname = element.attr("data-fullname");
+					System.out.println(data_fullname);
+					
+					threadAuthor = element.select("a[class~=(author ).*").get(0).text();
+					System.out.println(threadAuthor);
+					
+					inSubReddit = element.select("a[class~=(subreddit hover).*").get(0).text();
+					System.out.println(inSubReddit);
+					
+					// score_* is returning odd results, will need to be fixed
+					score_dislikesStr = element.select("span[class~=(score dislikes)]").get(0).text();
+					System.out.println(score_dislikes);
+					
+					score_unvotedStr = element.select("span[class~=(score unvoted)]").get(0).text();
+					System.out.println(score_unvoted);
+					
+					score_likesStr = element.select("span[class~=(score likes)]").get(0).text();
+					System.out.println(score_likes);
+					
+					Element title = element.select("a[href]").get(0);
+					titleLink = title.attr("href");
+					System.out.println(titleLink);
+					
+					titleDescription = element.select("a[href]").get(0).text();
+					System.out.println(titleDescription);
+					
+					// Retrieving the time is currently not working correctly
+					datetime = element.select("time[title]").first().text();
+					System.out.println(datetime);
+					
+					author = username;
+					System.out.println(author);
+					
+					userComment = element.select("div.md").text();
+					System.out.println(userComment);
+					
+					subRedditTo = inSubReddit;
+					System.out.println(subRedditTo);
+					
 					// For testing
 					//System.out.println(element);
-					//System.out.println("----------------------------------------------------------------------------------------------------");
+					System.out.println("----------------------------------------------------------------------------------------------------");
+					
+					// Process data here -->
 				}
 				
 				System.out.println("----------------------------------------------------------------------------------------------------");
