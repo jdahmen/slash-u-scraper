@@ -51,23 +51,100 @@ public class Scraper {
 				Elements userCommentsV2 = userPage.select("div[class~=( thing id-)[a-z0-9]+");
 				// For testing
 				System.out.println("Comments ...");
-				for (Element element : userCommentsV2) {
+				/*for (Element element : userCommentsV2) {
 					System.out.println(element);
 					System.out.println("----------------------------------------------------------------------------------------------------");
 					
-					// Processing should be performed here
-					/*
-					String threadTitle = element.select("").text();
-					String threadTitleURL = "";
-					String threadAuthor = "";
-					String postAuthor = "";
-					String subReddit = "";
-					int numPointsOnPost;
-					String postDateTime = "";
-					String comment = "";
-					// etc
-					 */
-				  }
+				}
+				System.out.println("----------------------------------------------------------------------------------------------------");
+				*/
+				
+				// The user being queried created the thread with this post
+				System.out.println("User post is OP");
+				String data_fullname = "";
+				int score_dislikes = 0; 
+				int score_unvoted = 0; 
+				int score_likes  = 0;
+				String titleLink = ""; 
+				String titleDescription = "";
+				String datetime = "";
+				String author = "";
+				String inSubReddit = "";
+				
+				Elements userCreatedThreads = userPage.select("div[class~=( thing id-).*( self)$]");
+				
+				for (Element element : userCreatedThreads) {
+					
+					data_fullname = element.attr("data-fullname");
+					System.out.println(data_fullname);
+					
+					score_dislikes = Integer.parseInt(element.select("div[class~=(score dislikes)]").get(0).text());
+					System.out.println(score_dislikes);
+					
+					score_unvoted = Integer.parseInt(element.select("div[class~=(score unvoted)]").get(0).text());
+					System.out.println(score_unvoted);
+					
+					score_likes = Integer.parseInt(element.select("div[class~=(score likes)]").get(0).text());
+					System.out.println(score_likes);
+					
+					
+					Element title = element.select("a").first();
+					//titleLink = element.select("a").first().attr("href");
+					titleLink = title.attr("href");
+					System.out.println(titleLink);
+					
+					//titleDescription = element.select("a").first().text();
+					//titleDescription = title.outerHtml();
+					titleDescription = element.select("a[href]").get(1).text();
+					System.out.println(titleDescription);
+					
+					// Retrieving the time is currently not working correctly
+					datetime = element.select("time[title]").first().text();
+					System.out.println(datetime);
+					
+					author = username;
+					System.out.println(author);
+					
+					inSubReddit = element.select("a[class~=(subreddit hover).*").get(0).text();
+					System.out.println(inSubReddit);
+					
+					
+					// For testing
+					//System.out.println(element);
+					System.out.println("----------------------------------------------------------------------------------------------------");
+				}
+				
+				System.out.println("----------------------------------------------------------------------------------------------------");
+				System.out.println("|                                                                                                  |");
+				System.out.println("|                                                                                                  |");
+				System.out.println("|                                                                                                  |");
+				System.out.println("----------------------------------------------------------------------------------------------------");
+				
+				
+				// The user being queried commented on a thread created by another user
+				//System.out.println("User post is in another thread");
+				data_fullname = "";
+				String threadTitle = "";
+				String threadAuthor = "";
+				inSubReddit = "";
+				datetime = "";
+				String userComment = "";
+				author = "";
+				String subRedditTo = "";
+				
+				Elements userPostedInThreads = userPage.select("div[class~=( thing id-).*( comment )$]");
+				
+				for (Element element : userPostedInThreads) {
+					// For testing
+					//System.out.println(element);
+					//System.out.println("----------------------------------------------------------------------------------------------------");
+				}
+				
+				System.out.println("----------------------------------------------------------------------------------------------------");
+				System.out.println("|                                                                                                  |");
+				System.out.println("|                                                                                                  |");
+				System.out.println("|                                                                                                  |");
+				System.out.println("----------------------------------------------------------------------------------------------------");
 				
 				Elements nextPageLink = userPage.select("span[class=nextprev]");
 				// For testing
@@ -118,7 +195,7 @@ public class Scraper {
 					}
 				}
 				
-				// Testing
+				// For testing
 				hasNextPage = false;
 			
 			} while (hasNextPage);
