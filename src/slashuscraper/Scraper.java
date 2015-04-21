@@ -2,23 +2,89 @@ package slashuscraper;
 
 import java.io.*;
 import java.util.*;
-import java.net.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.TimeUnit;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.jsoup.Connection;
-import org.jsoup.Connection.Response;
-
-import java.io.File;
-import java.io.BufferedWriter;
 
 public class Scraper {
 	// Scrapes data for a single user
 	// scrape page 1 -> get next page id for comments -> scrape page 2 -> get next page id for comments -> etc
 	
-	public static void scrape(String username) throws InterruptedException {
+	private ConcurrentLinkedQueue<String> usernames;	// List of usernames to be scraped
+	private boolean scrape;								// Status of scraping <T> scrape or <F> stopped
+	
+	// Constructor
+	public Scraper() {
+		// Initialize class variables
+		this.scrape = false;
+		this.usernames = new ConcurrentLinkedQueue<String>();
+	}
+	
+	// Add a single user to the queue
+	public void enqueue(String username) {
+		usernames.add(username);
+	}
+	
+	// Add a list of users to the queue
+	public void enqueue(ArrayList<String> usernames) {
+		usernames.addAll(usernames);
+	}
+	
+	// Return a username or empty
+	public String dequeue() {
+		return usernames.poll();
+	}
+	
+	// Start the scrape cycler
+	public void start() {
+		this.scrape = true;
+		try {
+			this.scrapeCycle();
+		} catch (InterruptedException e) {
+			System.out.println("CRITICAL ERROR: Scraper thread could no execute wait " 
+					+ "and has now crashed");			
+		}
+	}
+	
+	// Stop the scrape cycler
+	public void stop() {
+		this.scrape = false;		
+	}
+	
+	// Do scraping while class is active
+	private void scrapeCycle() throws InterruptedException {
+		// Username being evaluated
+		String username = "None";
+		// While active
+		while(scrape == true) {
+			// Check if queue is occupied
+			if(usernames.size() > 0) {
+				// Attempt to scrape user
+				try {
+					// Get head of queue
+					username = usernames.poll();
+					// Scrape username
+					scrape(username);
+				} catch (InterruptedException e) {
+					System.out.println("ERROR: Could not scrape user: " + username
+							+ ". Moving to next user.");
+				}
+				// Remove user from queue when finished
+				usernames.remove(0);
+			} else {
+				// Wait 50 milliseconds if the queue is empty
+				TimeUnit.MILLISECONDS.wait(50);
+			}
+		}
+		// Finished
+		return;
+	}
+	
+	private void scrape(String username) throws InterruptedException {
 		
 		String userURL = "http://www.reddit.com/user/" + username;
 		// For testing
@@ -31,7 +97,7 @@ public class Scraper {
 			
 			do {
 				System.out.println("Connecting to URL: " + userURL);
-				userPage =  Jsoup.connect( userURL ).timeout(50000).get();
+				userPage =  Jsoup.connect( userURL ).timeout(50000).get(); 						// ERROR: GETTING TIMEOUT EVERYTIME
 				// Maybe consider randomized user agent, assuming reddit doesn't look solely at IP address
 				numPagesFetched++;
 				// For testing

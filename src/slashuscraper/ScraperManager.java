@@ -9,12 +9,42 @@ public class ScraperManager {
 	// implemented here
 
 	public static void scrapeUsers(ArrayList<String> usernames) throws InterruptedException {
-		// Call Scraper.scrape(String username) for each username listed in usernames
+		// Call Scraper.scrape(String username) for each username listed in usernames		
 		
+		// Create 4 scraper instances
+		Scraper si1 = new Scraper();
+		Scraper si2 = new Scraper();
+		Scraper si3 = new Scraper();
+		Scraper si4 = new Scraper();
 		
-		// Perhaps wrap this in a for loop to handle multiple users.
-		String username = usernames.get(0);
+		// Make an array for the scraper instances
+		ArrayList<Scraper> scraperInstances = new ArrayList<Scraper>();
 		
-		Scraper.scrape(username);
+		// Add all scrapers to the instance list
+		scraperInstances.add(si1);
+		scraperInstances.add(si2);
+		scraperInstances.add(si3);
+		scraperInstances.add(si4);
+		
+		// Start scrapers instances. Only start the instances that are needed
+		// i.e. If only two users are supplied, only two instances will be started
+		for(int i = 0; i < scraperInstances.size() && i < usernames.size(); i++) {
+			scraperInstances.get(i).start();
+		}
+		
+		// Queue list of users into the scraper instances
+		for(int i = 0; i < usernames.size(); i++) {
+			Scraper s = scraperInstances.get(i % scraperInstances.size());
+			s.enqueue(usernames.get(i));
+		}
+		
+		// Stop each scraper and collect the data
+		for(Scraper s : scraperInstances) {
+			// s.getData();
+			s.stop();
+		}
+		
+		// Empty scraper instance array
+		scraperInstances.clear();
 	}
 }
