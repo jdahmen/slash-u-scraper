@@ -10,7 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class Scraper {
+public class Scraper implements Runnable {
 	// Scrapes data for a single user
 	// scrape page 1 -> get next page id for comments -> scrape page 2 -> get next page id for comments -> etc
 	
@@ -40,7 +40,8 @@ public class Scraper {
 	}
 	
 	// Start the scrape cycler
-	public void start() {
+	@Override
+	public void run() {
 		this.scrape = true;
 		try {
 			this.scrapeCycle();
@@ -75,9 +76,6 @@ public class Scraper {
 				}
 				// Remove user from queue when finished
 				usernames.remove(0);
-			} else {
-				// Wait 50 milliseconds if the queue is empty
-				TimeUnit.MILLISECONDS.wait(50);
 			}
 		}
 		// Finished
@@ -310,5 +308,4 @@ public class Scraper {
 		}
 		
 	}
-
 }
