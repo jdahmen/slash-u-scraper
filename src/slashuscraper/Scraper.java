@@ -1,10 +1,8 @@
 package slashuscraper;
 
 import java.io.*;
-import java.util.*;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.TimeUnit;
 
+import java.util.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,75 +12,14 @@ public class Scraper implements Runnable {
 	// Scrapes data for a single user
 	// scrape page 1 -> get next page id for comments -> scrape page 2 -> get next page id for comments -> etc
 	
-	private ConcurrentLinkedQueue<String> usernames;	// List of usernames to be scraped
-	private boolean scrape;								// Status of scraping <T> scrape or <F> stopped
+	public final String username;
 	
-	// Constructor
-	public Scraper() {
-		// Initialize class variables
-		this.scrape = false;
-		this.usernames = new ConcurrentLinkedQueue<String>();
+	Scraper(String username) {
+		this.username = username;
 	}
 	
-	// Add a single user to the queue
-	public void enqueue(String username) {
-		usernames.add(username);
-	}
-	
-	// Add a list of users to the queue
-	public void enqueue(ArrayList<String> usernames) {
-		usernames.addAll(usernames);
-	}
-	
-	// Return a username or empty
-	public String dequeue() {
-		return usernames.poll();
-	}
-	
-	// Start the scrape cycler
 	@Override
 	public void run() {
-		this.scrape = true;
-		try {
-			this.scrapeCycle();
-		} catch (InterruptedException e) {
-			System.out.println("CRITICAL ERROR: Scraper thread could no execute wait " 
-					+ "and has now crashed");			
-		}
-	}
-	
-	// Stop the scrape cycler
-	public void stop() {
-		this.scrape = false;		
-	}
-	
-	// Do scraping while class is active
-	private void scrapeCycle() throws InterruptedException {
-		// Username being evaluated
-		String username = "None";
-		// While active
-		while(scrape == true) {
-			// Check if queue is occupied
-			if(usernames.size() > 0) {
-				// Attempt to scrape user
-				try {
-					// Get head of queue
-					username = usernames.poll();
-					// Scrape username
-					scrape(username);
-				} catch (InterruptedException e) {
-					System.out.println("ERROR: Could not scrape user: " + username
-							+ ". Moving to next user.");
-				}
-				// Remove user from queue when finished
-				usernames.remove(0);
-			}
-		}
-		// Finished
-		return;
-	}
-	
-	private void scrape(String username) throws InterruptedException {
 		
 		String userURL = "http://www.reddit.com/user/" + username;
 		// For testing
