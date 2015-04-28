@@ -236,12 +236,13 @@ public class Scraper implements Runnable {
 				}
 				
 				// For testing
-				hasNextPage = false;
+				//hasNextPage = false;
 			
 			} while (hasNextPage);
 		}
 		catch (IOException e) {
 			System.out.println("Timeout error when scraping user information for user:" + username);
+			e.printStackTrace();
 		}
 		
 	}
