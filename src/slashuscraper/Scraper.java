@@ -207,6 +207,11 @@ public class Scraper implements Runnable {
 					// Page 2 ... n - 1 have a before and an after link in the same span
 					nextPageLinkString = nextPageLink.get(0).select("a").last().attr("href");
 				}
+				
+				if (nextPageLinkString == null)
+				{
+					hasNextPage = false;
+				}
 				//For testing
 				//System.out.println("The url of nextprev page is: " + nextPageLinkString);
 				//System.out.println("----------------------------------------------------------------------------------------------------");
@@ -214,12 +219,14 @@ public class Scraper implements Runnable {
 				
 				// Check if there is another page of user posts
 				// Check that the nextprev url contains "before"
-				if (nextPageLinkString.toLowerCase().contains("before")) {
+				if (hasNextPage && nextPageLinkString.toLowerCase().contains("before")) {
 					// Page n has a before link in the spot where there was an after link was for pages 1 .. n - 1
 					hasNextPage = false;
 				}
 				else {
-					userURL = nextPageLinkString;
+					if (hasNextPage) {
+						userURL = nextPageLinkString;
+					}
 				}
 					
 				// Random wait every 3 pages processed // Crude rate-limiting
