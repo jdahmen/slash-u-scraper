@@ -228,8 +228,8 @@ public class Scraper implements Runnable {
 					}
 				}
 				
-				// For testing
-				hasNextPage = false;
+				// Testing
+				//hasNextPage = false;
 			
 			} while (hasNextPage);
 		}
