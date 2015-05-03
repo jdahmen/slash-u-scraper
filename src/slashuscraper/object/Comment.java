@@ -1,4 +1,4 @@
-package slashuscraper;
+package slashuscraper.object;
 
 import java.time.LocalDate;
 import java.util.Hashtable;

@@ -8,6 +8,8 @@ import java.net.URL;
 import org.junit.Test;
 
 import slashuscraper.*;
+import slashuscraper.object.Page;
+import slashuscraper.object.PageType;
 
 public class PageTest {
 
