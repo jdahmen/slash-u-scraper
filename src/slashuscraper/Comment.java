@@ -2,6 +2,7 @@ package slashuscraper;
 
 import java.net.URL;
 import java.util.Date;
+import java.util.Hashtable;
 
 /* Container for comments */
 
@@ -9,35 +10,50 @@ public class Comment {
 
 	private URL url;			// URL of comment
 	private Date datePosted;	// date comment was posted
-	private int points;			// points awarded to comment
+	private int upvotes;		// votes for comment
+	private int downvotes;		// votes against comment
 	private boolean gilded;		// gilded status
 	private String subreddit;	// sub reddit where posted
+	private String author;		// author of post
 	private String content;		// content of comment
+	
+	// Store words in a case insensitive format with the word as the
+	// key and the integer frequency as the value
+	private Hashtable<String, Integer> wordFrequency;
 
 	// constructor
-	public Comment(URL url, Date datePosted, int points, boolean gilded, 
-			String subreddit, String content) {
+	public Comment(URL url, Date datePosted, int upvotes, int downvotes,
+			boolean gilded, String subreddit, String author, String content) {
 		this.url = url;
 		this.datePosted = datePosted;
-		this.points = points;
+		this.upvotes = upvotes;
+		this.downvotes = downvotes;
 		this.gilded = gilded;
 		this.subreddit = subreddit;
+		this.author = author;
 		this.content = content;
+		// Init word frequency
+		this.wordFrequency = new Hashtable<String, Integer>();
 	}
 
 	// get post URL
 	public URL getUrl() {
-		return url;
+		return this.url;
 	}
 
 	// get date post was created
 	public Date getDatePosted() {
-		return datePosted;
+		return this.datePosted;
 	}
 
-	// get post points
-	public int getPoints() {
-		return points;
+	// get post upvotes
+	public int getUpvotes() {
+		return this.upvotes;
+	}
+	
+	// get post downvotes
+	public int getDownvotes() {
+		return this.downvotes;
 	}
 	
 	// get gilded status
@@ -47,7 +63,12 @@ public class Comment {
 
 	// get subreddit where posted
 	public String getSubreddit() {
-		return subreddit;
+		return this.subreddit;
+	}
+	
+	// get author
+	public String getAuthor() {
+		return this.author;
 	}
 
 	// get post contents
@@ -55,14 +76,28 @@ public class Comment {
 		return content;
 	}
 	
+	// put words used in a table
+	public void addWordUsed(String word) {
+		// convert string to lower case for ease of matching
+		String wordUsed = word.trim().toLowerCase();
+		// if the key exists, increment the value, else initialize to 1
+		if(this.wordFrequency.contains(wordUsed)) {
+			this.wordFrequency.put(wordUsed, this.wordFrequency.get(wordUsed) + 1);
+		} else {
+			this.wordFrequency.put(wordUsed, 1);
+		}		
+	}
+	
 	// overriden toString
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder(
-				"URL:         " + this.url.toString() +
+				"URL:           " + this.url.toString() +
+				"\nAuthor:      " + this.author.toString() +
 				"\nDate posted: " + this.datePosted.toString() +
-				"\nPoints:      " + this.points +
-				"\nGilded:      " + this.gilded +
+				"\nUpvotes:     " + this.upvotes +
+				"\nDownvotes:   " + this.downvotes +
+				"\nGilded:      " + (this.gilded ? "yes" : "no") +
 				"\nSub reddit:  " + this.subreddit.toString() +
 				"\nContent:     " + this.content.toString());
 		return sb.toString();

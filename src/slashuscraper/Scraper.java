@@ -1,8 +1,9 @@
 package slashuscraper;
 
 import java.io.*;
-
 import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,6 +14,7 @@ public class Scraper implements Runnable {
 	// scrape page 1 -> get next page id for comments -> scrape page 2 -> get next page id for comments -> etc
 	
 	public final String username;
+	private ConcurrentLinkedQueue<Comment> comments = new ConcurrentLinkedQueue<Comment>();
 	
 	Scraper(String username) {
 		this.username = username;
@@ -115,6 +117,8 @@ public class Scraper implements Runnable {
 				author = "";
 				String userComment = "";
 				String subRedditTo = "";
+				
+				
 				
 				Elements userPostedInThreads = userPage.select("div[class~=( thing id-).*( comment )$]");
 				
@@ -240,7 +244,6 @@ public class Scraper implements Runnable {
 			// requests appear to come from the same IP or the same limited number of IPs. It should work fine on a VPS / etc. 
 			System.out.println("Error when scraping user information for user:" + username + " on page: " + numPagesFetched);
 			e.printStackTrace();
-		}
-		
+		}		
 	}
 }

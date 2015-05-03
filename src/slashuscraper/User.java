@@ -1,6 +1,5 @@
 package slashuscraper;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
@@ -10,7 +9,7 @@ import java.util.Hashtable;
 public class User {
 
 	private String username;	// reddit username
-	private URL userBaseUrl;	// user page URL
+	private String userBaseUrl;	// user page URL
 	private Date joinDate;		// date user joined reddit
 	
 	private int linkKarma;		// link karma count
@@ -19,17 +18,24 @@ public class User {
 	private ArrayList<String> trophies;				// list of trophies
 	
 	private Hashtable<String, Integer> visitedSubs;	// sub-reddit hit counts
-	private Hashtable<String, Integer> wordsUsed;	// work hit counts
+	
+	// Store words in a case insensitive format with the word as the
+	// key and the integer frequency as the value
+	private Hashtable<String, Integer> wordFrequency;
+	// Store frequency of posting, with respect to days of the week
+	// where the day of the week is the key and the rate is the value
+	private Hashtable<Integer, Integer> postRate;
 	
 	/* Add more stats add needed */
 	
 	// constructor
-	public User(String username, URL userBaseUrl) {
+	public User(String username) {
 		this.username = username;
-		this.userBaseUrl = userBaseUrl;		
+		this.userBaseUrl = ("http://www.reddit.com/user/" + username);		
 		trophies = new ArrayList<String>();
 		visitedSubs = new Hashtable<String, Integer>();
-		wordsUsed = new Hashtable<String, Integer>();
+		this.wordFrequency = new Hashtable<String, Integer>();
+		this.postRate = new Hashtable<Integer, Integer>();
 	}
 
 	// get username
@@ -38,7 +44,7 @@ public class User {
 	}
 
 	// get user's base URL
-	public URL getUserBaseUrl() {
+	public String getUserBaseUrl() {
 		return userBaseUrl;
 	}
 
@@ -103,7 +109,7 @@ public class User {
 
 	// get a hash table of used words and hit count
 	public Hashtable<String, Integer> getUsedWords() {
-		return wordsUsed;
+		return wordFrequency;
 	}
 
 	// put words used in a table
@@ -111,10 +117,10 @@ public class User {
 		// convert string to lower case for ease of matching
 		String wordUsed = word.trim().toLowerCase();
 		// if the key exists, increment the value, else initialize to 1
-		if(this.wordsUsed.contains(wordUsed)) {
-			this.wordsUsed.put(wordUsed, this.wordsUsed.get(wordUsed) + 1);
+		if(this.wordFrequency.contains(wordUsed)) {
+			this.wordFrequency.put(wordUsed, this.wordFrequency.get(wordUsed) + 1);
 		} else {
-			this.wordsUsed.put(wordUsed, 1);
+			this.wordFrequency.put(wordUsed, 1);
 		}		
 	}	
 }
