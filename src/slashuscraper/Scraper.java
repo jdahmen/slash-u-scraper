@@ -10,6 +10,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import slashuscraper.object.Comment;
+
 public class Scraper implements Runnable {
 	// Scrapes data for a single user
 	// scrape page 1 -> get next page id for comments -> scrape page 2 -> get next page id for comments -> etc

@@ -10,8 +10,8 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import slashuscraper.Comment;
-import slashuscraper.Post;
+import slashuscraper.object.Comment;
+import slashuscraper.object.Post;
 
 public class PostTest {
 

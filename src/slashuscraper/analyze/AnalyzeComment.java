@@ -1,6 +1,8 @@
-package slashuscraper;
+package slashuscraper.analyze;
 
 import java.util.concurrent.Callable;
+
+import slashuscraper.object.Comment;
 
 /*
  * Analyze all comments and posts to find statistics

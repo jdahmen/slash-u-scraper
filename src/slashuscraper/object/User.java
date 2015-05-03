@@ -1,7 +1,7 @@
-package slashuscraper;
+package slashuscraper.object;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Hashtable;
 
 /* Container for reddit user data and statistics */
@@ -10,12 +10,10 @@ public class User {
 
 	private String username;	// reddit username
 	private String userBaseUrl;	// user page URL
-	private Date joinDate;		// date user joined reddit
+	private LocalDate joinDate;	// date user joined reddit
 	
 	private int linkKarma;		// link karma count
 	private int commentKarma;	// comment karma count
-	
-	private ArrayList<String> trophies;				// list of trophies
 	
 	private Hashtable<String, Integer> visitedSubs;	// sub-reddit hit counts
 	
@@ -25,14 +23,15 @@ public class User {
 	// Store frequency of posting, with respect to days of the week
 	// where the day of the week is the key and the rate is the value
 	private Hashtable<Integer, Integer> postRate;
+	// List of user comments to be processed
+	private ArrayList<Comment> userComments = null;
 	
 	/* Add more stats add needed */
 	
 	// constructor
 	public User(String username) {
 		this.username = username;
-		this.userBaseUrl = ("http://www.reddit.com/user/" + username);		
-		trophies = new ArrayList<String>();
+		this.userBaseUrl = ("http://www.reddit.com/user/" + username);
 		visitedSubs = new Hashtable<String, Integer>();
 		this.wordFrequency = new Hashtable<String, Integer>();
 		this.postRate = new Hashtable<Integer, Integer>();
@@ -49,14 +48,14 @@ public class User {
 	}
 
 	// get join date
-	public Date getJoinDate() throws Exception {
+	public LocalDate getJoinDate() throws Exception {
 		if(joinDate == null)
 			throw new Exception("Join date not defined");
 		return joinDate;
 	}
 
 	// set join date 
-	public void setJoinDate(Date joinDate) {
+	public void setJoinDate(LocalDate joinDate) {
 		this.joinDate = joinDate;
 	}
 
@@ -80,19 +79,14 @@ public class User {
 		this.commentKarma = commentKarma;
 	}
 
-	// get trophy list
-	public ArrayList<String> getTrophies() {
-		return trophies;
-	}
-
-	// add a trophy to the list
-	public void addTrophy(String trophy) {
-		trophies.add(trophy);
-	}
-
 	// get a hash table of visited subs and hit count
 	public Hashtable<String, Integer> getVisitedSubs() {
 		return visitedSubs;
+	}
+	
+	// Add a comment to the list of user comments
+	public void addComment(Comment comment) {
+		this.userComments.add(comment);
 	}
 
 	// put sub reddit in a table

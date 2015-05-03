@@ -1,22 +1,32 @@
 package slashuscraper;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+
+import slashuscraper.analyze.AnalyzeComment;
+import slashuscraper.analyze.AnalyzeUser;
+import slashuscraper.object.Comment;
+import slashuscraper.object.User;
 
 public class ScraperManager {
 
 	private ConcurrentLinkedQueue<Comment> comments = new ConcurrentLinkedQueue<Comment>();
 
-	public static void scrapeUsers(ArrayList<String> usernames)
+	public static List<User> scrapeUsers(ArrayList<String> usernames)
 			throws InterruptedException {
 
 		// Create a list of users
-		ArrayList<User> users = new ArrayList<User>();
+		ConcurrentHashMap<String, User> users = new ConcurrentHashMap<String, User>();
 		
 		// Create a queue of comments
 		ConcurrentLinkedQueue<Comment> comments = new ConcurrentLinkedQueue<Comment>();
@@ -39,7 +49,8 @@ public class ScraperManager {
 			String username = usernames.get(i);
 
 			// Add user to users list
-			users.add(new User(usernames.get(i)));
+			users.put(usernames.get(i).trim().toLowerCase(), 
+					new User(usernames.get(i).trim().toLowerCase()));
 
 			Runnable scraper = new Scraper(username);
 			executor.execute(scraper);
@@ -60,7 +71,7 @@ public class ScraperManager {
 
 		// Begin analyzing posts and comments
 		// Use a cached thread pool to expand thread count dynamically
-		ExecutorService cachedPool = Executors.newCachedThreadPool();
+		ExecutorService cachedPool1 = Executors.newCachedThreadPool();
 
 		// Create a list of future objects
 		List<Future<Comment>> analyzedComments = new ArrayList<Future<Comment>>();
@@ -69,18 +80,97 @@ public class ScraperManager {
 		
 		while((toAnalyze = comments.poll()) != null) {
 			Callable<Comment> analyzeComments = new AnalyzeComment(toAnalyze);
-			Future<Comment> callableFuture = cachedPool.submit(analyzeComments);
+			Future<Comment> callableFuture = cachedPool1.submit(analyzeComments);
 			analyzedComments.add(callableFuture);
 		}
 		
 		// shutdown the pool.
-		cachedPool.shutdown();
+		cachedPool1.shutdown();
+		
+		// Wait until shutdown complete
+		while(!cachedPool1.isTerminated()) { ; }
+		
+		// Key object for matching with user
+		String key = null;
+		// Object
+		Comment com;
+		
+		// Testing output
+		System.out.println("[COMPLETE] Done processing comments");
+		
+		// Match comments with user object
+		for(Future<Comment> f : analyzedComments) {
+			// Clean up name to match up with key
+			try {
+				// Get comment from future
+				com = f.get();				
+				// Get key from comment
+				key = com.getAuthor().trim().toLowerCase();
+				// Get user by key and add comment
+				users.get(key).addComment(com);				
+			} catch (ExecutionException e) {
+				// Error
+				System.out.println("FUTURE_ERROR: Could not 'get' comment from future");
+			}		
+		}
+		
+		// Testing output
+		System.out.println("[COMPLETE] Done matching comments with users");
 		
 		/************************************************************************/
 		/* Analyze User Data                                                    */
 		/************************************************************************/
 		
-		// TODO: create 
+		// Begin analyzing posts and comments by user
+		// Use a cached thread pool to expand thread count dynamically
+		ExecutorService cachedPool2 = Executors.newCachedThreadPool();
 
+		// Create a list of future objects
+		List<Future<User>> analyzedUsers = new ArrayList<Future<User>>();
+		
+		// User entry to analyze
+		Map.Entry<String, User> entry = null;
+		
+		// User hash map iterator
+		Iterator<Entry<String, User>> itr = users.entrySet().iterator();
+		
+		while(itr.hasNext()) {
+			entry = itr.next();
+			Callable<User> analyzeUsers = new AnalyzeUser(entry.getValue());
+			Future<User> callableFuture = cachedPool2.submit(analyzeUsers);
+			analyzedUsers.add(callableFuture);
+		}
+		
+		// shutdown the pool.
+		cachedPool2.shutdown();
+		
+		// Wait for termination
+		while(!cachedPool2.isTerminated()) { ; }
+		
+		// Testing output
+		System.out.println("[COMPLETE] Done analyzing users");
+		
+		// Get users from 'future' objects and append to list
+		ArrayList<User> processedUsers = new ArrayList<User>();
+		
+		// Temporary user
+		User usr = null;
+		
+		// Append
+		for(Future<User> f : analyzedUsers) {
+			// Try to get user
+			try {
+				// Get user
+				usr = f.get();
+				// Get key
+				processedUsers.add(usr);
+			} catch(ExecutionException e) {
+				// Throw error
+				System.out.println("FUTURE_ERROR: Could not get user(s) for future object");
+			}
+		}
+		
+		// Return processed users
+		return processedUsers;
 	}
 }

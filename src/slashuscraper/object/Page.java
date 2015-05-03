@@ -1,4 +1,4 @@
-package slashuscraper;
+package slashuscraper.object;
 
 import java.net.URL;
 
