@@ -166,7 +166,11 @@ public class Scraper implements Runnable {
 					//System.out.println(element);
 					System.out.println("----------------------------------------------------------------------------------------------------");
 					
-					// Process data here -->
+					// Add comment to list to be returned
+					// TODO: Fix date handling
+					comments.add(new Comment(titleLink, Helper.stringToDate(datetime), score_likes, score_dislikes, 
+							false, inSubReddit, this.username, userComment));
+					
 				}
 				
 				System.out.println("----------------------------------------------------------------------------------------------------");

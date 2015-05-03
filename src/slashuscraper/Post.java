@@ -1,6 +1,6 @@
 package slashuscraper;
 
-import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,7 +13,7 @@ public class Post extends Comment {
 	private ArrayList<Comment> comments; // List of comments in post
 
 	// constructor
-	public Post(URL url, String title, Date datePosted, int upvotes,
+	public Post(String url, String title, LocalDate datePosted, int upvotes,
 			int downvotes, boolean gilded, String subreddit, String author,
 			String content) {
 		super(url, datePosted, upvotes, downvotes, gilded, subreddit, author,

@@ -1,28 +1,27 @@
 package slashuscraper;
 
-import java.net.URL;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Hashtable;
 
 /* Container for comments */
 
 public class Comment {
 
-	private URL url;			// URL of comment
-	private Date datePosted;	// date comment was posted
-	private int upvotes;		// votes for comment
-	private int downvotes;		// votes against comment
-	private boolean gilded;		// gilded status
-	private String subreddit;	// sub reddit where posted
-	private String author;		// author of post
-	private String content;		// content of comment
+	private String url;				// URL of comment
+	private LocalDate datePosted;	// date comment was posted
+	private int upvotes;			// votes for comment
+	private int downvotes;			// votes against comment
+	private boolean gilded;			// gilded status
+	private String subreddit;		// sub reddit where posted
+	private String author;			// author of post
+	private String content;			// content of comment
 	
 	// Store words in a case insensitive format with the word as the
 	// key and the integer frequency as the value
 	private Hashtable<String, Integer> wordFrequency;
 
 	// constructor
-	public Comment(URL url, Date datePosted, int upvotes, int downvotes,
+	public Comment(String url, LocalDate datePosted, int upvotes, int downvotes,
 			boolean gilded, String subreddit, String author, String content) {
 		this.url = url;
 		this.datePosted = datePosted;
@@ -37,12 +36,12 @@ public class Comment {
 	}
 
 	// get post URL
-	public URL getUrl() {
+	public String getUrl() {
 		return this.url;
 	}
 
 	// get date post was created
-	public Date getDatePosted() {
+	public LocalDate getDatePosted() {
 		return this.datePosted;
 	}
 

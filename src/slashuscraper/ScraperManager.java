@@ -1,6 +1,8 @@
 package slashuscraper;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -61,13 +63,18 @@ public class ScraperManager {
 		ExecutorService cachedPool = Executors.newCachedThreadPool();
 
 		// Create a list of future objects
+		List<Future<Comment>> analyzedComments = new ArrayList<Future<Comment>>();
 		
-//		
-//		Callable<Comment> analyzeComments = new AnalyzeComment();
-//		
-//		Future<Comment> callableFuture = cachedPool.submit(aCallable);
-//		
-		cachedPool.shutdown(); // shutdown the pool.
+		Comment toAnalyze = null;
+		
+		while((toAnalyze = comments.poll()) != null) {
+			Callable<Comment> analyzeComments = new AnalyzeComment(toAnalyze);
+			Future<Comment> callableFuture = cachedPool.submit(analyzeComments);
+			analyzedComments.add(callableFuture);
+		}
+		
+		// shutdown the pool.
+		cachedPool.shutdown();
 		
 		/************************************************************************/
 		/* Analyze User Data                                                    */
