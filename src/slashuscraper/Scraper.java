@@ -1,6 +1,7 @@
 package slashuscraper;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -79,7 +80,7 @@ public class Scraper implements Runnable {
 					System.out.println(titleDescription);
 					
 					//datetime = element.select("time[title]").first().text();
-					datetime = element.select("time[title]").first().attr("title");
+					datetime = element.select("time[title]").first().attr("datetime");
 					System.out.println(datetime);
 					
 					author = username;
@@ -93,6 +94,8 @@ public class Scraper implements Runnable {
 					System.out.println("----------------------------------------------------------------------------------------------------");
 					
 					// Process data here -->
+					comments.add(new Post(titleLink, titleDescription, Helper.stringToDate(datetime), score_likes,
+					                      score_dislikes, false, inSubReddit, author, null));
 				}
 				
 				System.out.println("----------------------------------------------------------------------------------------------------");
@@ -150,7 +153,7 @@ public class Scraper implements Runnable {
 					System.out.println(titleDescription);
 					
 					//datetime = element.select("time[title]").first().text();
-					datetime = element.select("time[title]").first().attr("title");
+					datetime = element.select("time[title]").first().attr("datetime");
 					System.out.println(datetime);
 					
 					author = username;
@@ -169,7 +172,7 @@ public class Scraper implements Runnable {
 					// Add comment to list to be returned
 					// TODO: Fix date handling
 					comments.add(new Comment(titleLink, Helper.stringToDate(datetime), score_likes, score_dislikes, 
-							false, inSubReddit, this.username, userComment));
+							                 false, inSubReddit, this.username, userComment));
 					
 				}
 				
