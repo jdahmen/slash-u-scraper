@@ -78,8 +78,8 @@ public class Scraper implements Runnable {
 					titleDescription = element.select("a[href]").get(1).text();
 					System.out.println(titleDescription);
 					
-					// Retrieving the time is currently not working correctly
-					datetime = element.select("time[title]").first().text();
+					//datetime = element.select("time[title]").first().text();
+					datetime = element.select("time[title]").first().attr("title");
 					System.out.println(datetime);
 					
 					author = username;
@@ -133,7 +133,6 @@ public class Scraper implements Runnable {
 					inSubReddit = element.select("a[class~=(subreddit hover).*").get(0).text();
 					System.out.println(inSubReddit);
 					
-					// score_* is returning odd results, will need to be fixed
 					score_dislikesStr = element.select("span[class~=(score dislikes)]").get(0).text();
 					System.out.println(score_dislikesStr);
 					
@@ -150,8 +149,8 @@ public class Scraper implements Runnable {
 					titleDescription = element.select("a[href]").get(0).text();
 					System.out.println(titleDescription);
 					
-					// Retrieving the time is currently not working correctly
-					datetime = element.select("time[title]").first().text();
+					//datetime = element.select("time[title]").first().text();
+					datetime = element.select("time[title]").first().attr("title");
 					System.out.println(datetime);
 					
 					author = username;
