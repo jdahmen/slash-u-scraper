@@ -17,10 +17,7 @@ public class ScraperManager {
 		ArrayList<User> users = new ArrayList<User>();
 		
 		// Create a queue of comments
-		ConcurrentLinkedQueue<Comment> collectedComments = new ConcurrentLinkedQueue<Comment>();
-		
-		// Create a queue of analyzed comments
-		ConcurrentLinkedQueue<Comment> processedComments = new ConcurrentLinkedQueue<Comment>();
+		ConcurrentLinkedQueue<Comment> comments = new ConcurrentLinkedQueue<Comment>();
 
 		/**************************************************************************/
 		/* Scrape comments                                                        */
@@ -50,6 +47,8 @@ public class ScraperManager {
 		while (!executor.isTerminated()) {
 			;
 		}
+		
+		// TODO: Collect comments into queue (above)
 
 		System.out.println("Done scraping!");
 		
@@ -62,7 +61,13 @@ public class ScraperManager {
 		ExecutorService cachedPool = Executors.newCachedThreadPool();
 
 		// Create a list of future objects
-		ArrayList<Future<Comment>> analytics = new ArrayList<Future<Comment>>();
+		
+//		
+//		Callable<Comment> analyzeComments = new AnalyzeComment();
+//		
+//		Future<Comment> callableFuture = cachedPool.submit(aCallable);
+//		
+		cachedPool.shutdown(); // shutdown the pool.
 		
 		/************************************************************************/
 		/* Analyze User Data                                                    */

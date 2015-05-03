@@ -1,28 +1,30 @@
 package slashuscraper;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /*
  * Analyze all comments and posts to find statistics
  */
 
-public class AnalyzeComment implements Callable<Comment> {
+public class AnalyzeComment implements Runnable {
 
 	// Locally stored comments to be analyzed
-	private final BlockingQueue<Comment> comments;
+	private ConcurrentLinkedQueue<Comment> collectedComments;
+	// Locally stored comment that have been analyzed
+	private ConcurrentLinkedQueue<Comment> processedComments;
 	
 	// Main constructor
-	public AnalyzeComment(BlockingQueue<Comment> comments) {
-		this.comments = comments;
+	public AnalyzeComment(ConcurrentLinkedQueue<Comment> comments) {
+		this.collectedComments = comments;
+		this.processedComments = new ConcurrentLinkedQueue<Comment>();
 	}
 	
 	// Called to analyzed a comment/post
 	@Override
-	public Comment call() throws Exception {
+	public void run() {
 		// Get comment
 		Comment comment = null;
-		while((comment = comments.poll()) != null) {
+		while((comment = collectedComments.poll()) != null) {
 			// Process and split comment content
 			// Omit punctuation, convert all to lower case, and split by space
 			String[] words = comment.getContent().replace("[^A-Za-z'-]", "")
@@ -30,9 +32,14 @@ public class AnalyzeComment implements Callable<Comment> {
 			// Traverse words and
 			for(String s : words) {
 				comment.addWordUsed(s);
-			}		
-			// Return analyzed comment
-			return comment;
+			}
+			// Add to processed queue
+			processedComments.add(comment);
 		}
+	}
+	
+	// Return all processed comments
+	public ConcurrentLinkedQueue<Comment> getProcessedComments() {
+		return this.processedComments;
 	}
 }
