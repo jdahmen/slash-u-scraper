@@ -2,7 +2,6 @@ package slashuscraper.object;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 /* Container class for posts */
 

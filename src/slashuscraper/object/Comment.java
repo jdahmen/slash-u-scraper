@@ -87,6 +87,11 @@ public class Comment {
 		}		
 	}
 	
+	// get word frequency
+	public Hashtable<String, Integer> getWordFrequency() {
+		return this.wordFrequency;
+	}
+	
 	// overriden toString
 	@Override
 	public String toString() {

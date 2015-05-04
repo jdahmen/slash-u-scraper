@@ -10,19 +10,24 @@ public class User {
 
 	private String username;	// reddit username
 	private String userBaseUrl;	// user page URL
+	
 	private LocalDate joinDate;	// date user joined reddit
 	
-	private int linkKarma;		// link karma count
-	private int commentKarma;	// comment karma count
+	// Generate average karma = karma / interactions
+	private int karma = 0;
+	private int interactions = 0;
 	
-	private Hashtable<String, Integer> visitedSubs;	// sub-reddit hit counts
+	// sub-reddit hit counts	
+	private Hashtable<String, Integer> visitedSubs;
 	
 	// Store words in a case insensitive format with the word as the
 	// key and the integer frequency as the value
 	private Hashtable<String, Integer> wordFrequency;
+	
 	// Store frequency of posting, with respect to days of the week
 	// where the day of the week is the key and the rate is the value
 	private Hashtable<Integer, Integer> postRate;
+	
 	// List of user comments to be processed
 	private ArrayList<Comment> userComments = null;
 	
@@ -59,24 +64,18 @@ public class User {
 		this.joinDate = joinDate;
 	}
 
-	// get link karma
-	public int getLinkKarma() {
-		return linkKarma;
+	// get link average interaction karma
+	public int getAverageKarma() {
+		if(this.interactions == 0)
+			return 0;
+		else
+			return (this.karma / this.interactions);
 	}
 
-	// set link karma
-	public void setLinkKarma(int linkKarma) {
-		this.linkKarma = linkKarma;
-	}
-
-	// get comment karma
-	public int getCommentKarma() {
-		return commentKarma;
-	}
-
-	// set comment karma
-	public void setCommentKarma(int commentKarma) {
-		this.commentKarma = commentKarma;
+	// add to karma average
+	public void addKarmaToAverage(int karma) {
+		this.karma += karma;
+		this.interactions++;
 	}
 
 	// get a hash table of visited subs and hit count
@@ -87,6 +86,37 @@ public class User {
 	// Add a comment to the list of user comments
 	public void addComment(Comment comment) {
 		this.userComments.add(comment);
+	}
+	
+	// Add multiple comments to the list of user comments
+	public void addComments(ArrayList<Comment> comments) {
+		this.userComments.addAll(comments);
+	}
+	
+	// Get comment from list and delete it
+	public Comment popComment() {
+		if(this.userComments.size() != 0) {
+			Comment pop = this.userComments.get(0);
+			this.userComments.remove(0);
+			return pop;
+		} else  {
+			return null;
+		}
+	}
+	
+	// Increment a day of the week per day comment was created
+	public void addToPostRate(int day) {
+		// if the key exists, increment value, else initialize to 1
+		if(this.postRate.contains(day)) {
+			this.postRate.put(day, this.postRate.get(day) + 1);
+		} else {
+			this.postRate.put(day, 1);
+		}
+	}
+	
+	// Get the post rate
+	public Hashtable<Integer, Integer> getPostRate() {
+		return this.postRate;
 	}
 
 	// put sub reddit in a table
@@ -116,5 +146,17 @@ public class User {
 		} else {
 			this.wordFrequency.put(wordUsed, 1);
 		}		
-	}	
+	}
+	
+	// put words used in a table
+	public void addWordUsed(String word, int count) {
+		// convert string to lower case for ease of matching
+		String wordUsed = word.trim().toLowerCase();
+		// if the key exists, increment the value, else initialize to 1
+		if(this.wordFrequency.contains(wordUsed)) {
+			this.wordFrequency.put(wordUsed, this.wordFrequency.get(wordUsed) + count);
+		} else {
+			this.wordFrequency.put(wordUsed, count);
+		}		
+	}
 }
