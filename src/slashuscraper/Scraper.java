@@ -29,7 +29,7 @@ public class Scraper implements Callable<ConcurrentLinkedQueue<Comment>> {
 	public ConcurrentLinkedQueue<Comment> call() {
 		
 		String userURL = "http://www.reddit.com/user/" + username;
-		// Testing
+		
 		//System.out.println("The url is: " + userURL);
 	
 		boolean hasNextPage = true; 
@@ -125,8 +125,6 @@ public class Scraper implements Callable<ConcurrentLinkedQueue<Comment>> {
 				String userComment = "";
 				String subRedditTo = "";
 				
-				
-				
 				Elements userPostedInThreads = userPage.select("div[class~=( thing id-).*( comment )$]");
 				
 				for (Element element : userPostedInThreads) {
@@ -172,6 +170,11 @@ public class Scraper implements Callable<ConcurrentLinkedQueue<Comment>> {
 					// For testing
 					//System.out.println(element);
 //					System.out.println("----------------------------------------------------------------------------------------------------");
+					
+					// TODO: Check on score_likes and score_dislikes, should be score_likesStr and score_dislikesStr
+					
+					// score_likes = Integer.parseInt(score_likesStr.replaceAll("[\\D]", ""));
+					// score_dislikes = Integer.parseInt(score_dislikesStr.replaceAll("[\\D]", ""))
 					
 					// Add comment to list to be returned
 					comments.add(new Comment(titleLink, Helper.stringToDate(datetime), score_likes, score_dislikes, 
