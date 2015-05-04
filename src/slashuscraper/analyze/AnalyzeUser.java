@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 
 import slashuscraper.object.Comment;
 import slashuscraper.object.User;
+import slashuscraper.object.Word;
 
 public class AnalyzeUser implements Callable<User> {
 
@@ -30,25 +31,35 @@ public class AnalyzeUser implements Callable<User> {
 		// Process all user comments and posts
 		while((comment = user.popComment()) != null) {
 			
+			// System.out.println("[STATUS] AnalyzeUser processsing comment");
+			
 			// Get date posted
 			date = comment.getDatePosted();
 			// Replace join date if earlier
 			if(date.isBefore(joinDate)) {
 				joinDate = date;
 			}
+			
+			// System.out.println("[STATUS] Date: " + date.getDayOfWeek().getValue());
+			
 			// Increment post per day of the week
 			user.addToPostRate(date.getDayOfWeek().getValue());
 			
-			// Create word rate iterator
-			Iterator<Entry<String, Integer>> itr = comment.getWordFrequency()
-					.entrySet().iterator();
-			Map.Entry<String, Integer> entry = null;
-			// Add words and counts to word rate
-			while(itr.hasNext()) {
-				// Get next entry
-				entry = itr.next();
-				// Add values to existing word bank
-				user.addWordUsed(entry.getKey(), entry.getValue());
+			// System.out.println("[STATUS] Added date");
+			
+			// Check if content exists
+			if(comment.getContent().length() > 0) {				
+				// Create word rate iterator
+				Iterator<Entry<String, Word>> itr = comment.getWordFrequency()
+						.entrySet().iterator();
+				Map.Entry<String, Word> entry = null;
+				// Add words and counts to word rate
+				while(itr.hasNext()) {
+					// Get next entry
+					entry = itr.next();
+					// Add values to existing word bank
+					user.addWordUsed(entry.getValue().getWord(), entry.getValue().getCount());
+				}
 			}
 			
 			// Add karma elemnts to user average (upvotes - downvotes)

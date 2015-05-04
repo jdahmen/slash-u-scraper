@@ -111,8 +111,8 @@ public class User {
 	// Increment a day of the week per day comment was created
 	public void addToPostRate(int day) {
 		// if the key exists, increment value, else initialize to 1
-		if(this.postRate.contains(day)) {
-			this.postRate.put(day, this.postRate.get(day) + 1);
+		if(this.postRate.contains(day) && this.postRate.get(day) != null) {
+			this.postRate.replace(day, this.postRate.get(day) + 1);
 		} else {
 			this.postRate.put(day, 1);
 		}
@@ -127,9 +127,12 @@ public class User {
 	public void addVisitedSub(String sub) {
 		// convert string to lower case for ease of matching
 		String subreddit = sub.trim().toLowerCase();
+		// get element
+		Sub subObj = this.visitedSubs.get(subreddit);
 		// if the key exists, increment value, else initialize to 1
-		if(this.visitedSubs.contains(subreddit)) {
-			this.visitedSubs.get(subreddit).increment();
+		if(subObj != null) {
+			subObj.increment();
+			this.visitedSubs.replace(subreddit, subObj);
 		} else {
 			this.visitedSubs.put(subreddit, new Sub(subreddit, 1));
 		}
@@ -144,9 +147,12 @@ public class User {
 	public void addWordUsed(String word) {
 		// convert string to lower case for ease of matching
 		String wordUsed = word.trim().toLowerCase();
+		// get element
+		Word wordObj = this.wordFrequency.get(wordUsed);
 		// if the key exists, increment the value, else initialize to 1
-		if(this.wordFrequency.contains(wordUsed)) {
-			this.wordFrequency.get(wordUsed).increment();
+		if(wordObj != null) {
+			wordObj.increment();
+			this.wordFrequency.replace(wordUsed, wordObj);
 		} else {
 			this.wordFrequency.put(wordUsed, new Word(wordUsed, 1));
 		}		
@@ -156,9 +162,12 @@ public class User {
 	public void addWordUsed(String word, int count) {
 		// convert string to lower case for ease of matching
 		String wordUsed = word.trim().toLowerCase();
+		// get element
+		Word wordObj = this.wordFrequency.get(wordUsed);
 		// if the key exists, increment the value, else initialize to 1
-		if(this.wordFrequency.contains(wordUsed)) {
-			this.wordFrequency.get(wordUsed).increment(count);
+		if(wordObj != null) {
+			wordObj.increment(count);
+			this.wordFrequency.replace(wordUsed, wordObj);
 		} else {
 			this.wordFrequency.put(wordUsed, new Word(wordUsed, count));
 		}		
@@ -167,6 +176,13 @@ public class User {
 	// Print user stats
 	public String stats() {
 		
+		// Remove common words from map
+		String[] commonWords = {"a","the","you","to","of","and","i",
+				"it","is","your","that","if","for","in","are","this"};
+		for(String cw : commonWords) {
+			wordFrequency.remove(cw);
+		}
+		
 		// Generate dictionary
 		List<Word> words = new ArrayList<Word>(wordFrequency.values());
 		
@@ -174,7 +190,7 @@ public class User {
 		Collections.sort(words, new Comparator<Word>() {
 			@Override
 			public int compare(Word w1, Word w2) {
-				return ( w1.getCount() - w2.getCount() );
+				return ( w2.getCount() - w1.getCount() );
 			}
 		});
 		
@@ -185,7 +201,7 @@ public class User {
 		Collections.sort(subs, new Comparator<Sub>() {
 			@Override
 			public int compare(Sub s1, Sub s2) {
-				return ( s1.getCount() - s2.getCount() );
+				return ( s2.getCount() - s1.getCount() );
 			}
 			
 		});	
@@ -196,11 +212,12 @@ public class User {
 		// Append basic user info
 		sb.append("User: " + this.username + "\n");
 		sb.append("URL:  " + this.userBaseUrl + "\n");
+		sb.append("Active since: " + this.joinDate.toString() + "\n");
 		
 		sb.append("Most frequency used words: \n");
 		
 		// Append most commonly used words
-		for(int i = 0; i < 3 && i < words.size(); i++) {
+		for(int i = 0; i < 10 && i < words.size(); i++) {
 			sb.append("    " + (i+1) + ". " + words.get(i).getWord() 
 					+ " (" + words.get(i).getCount() + ")\n");
 		}
@@ -208,12 +225,16 @@ public class User {
 		sb.append("Most actively participated subreddits: \n");
 		
 		// Append most visited subreddits
-		for(int i = 0; i < 3 && i < subs.size(); i++) {
+		for(int i = 0; i < 10 && i < subs.size(); i++) {
 			sb.append("    " + (i+1) + ". " + subs.get(i).getSub()
 					+ " (" + subs.get(i).getCount() + ")\n");
 		}
 		
 		sb.append("\n");
+		
+//		for(Word w : words) {
+//			System.out.println("Word: " + w.getWord() + "(" + w.getCount() + ")\n");
+//		}
 		
 		// Return string
 		return sb.toString();

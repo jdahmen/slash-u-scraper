@@ -30,12 +30,21 @@ public class AnalyzeComment implements Callable<Comment> {
 		}
 		// Process and split comment content
 		// Omit punctuation, convert all to lower case, and split by space
-		String[] words = comment.getContent().replace("[^A-Za-z'-]", "")
-				.toLowerCase().split("\\s+");
+		String[] words = comment.getContent().toLowerCase().replaceAll(
+				"[^A-Za-z\\s+]", "").split("\\s+");		
 		// Traverse words and
 		for(String s : words) {
 			comment.addWordUsed(s);
 		}
+		
+//		Map<String, Word> wrd = comment.getWordFrequency();
+//		ArrayList<String> wrds = new ArrayList<String>(wrd.keySet());
+		
+//		System.out.println("Output:");
+		
+//		for(String s : wrds) { System.out.print(s + " "); }
+//		System.out.println();
+		
 		// Return processed comment
 		return comment;
 	}

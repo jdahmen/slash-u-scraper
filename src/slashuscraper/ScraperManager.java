@@ -163,11 +163,7 @@ public class ScraperManager {
 			// Clean up name to match up with key
 			try {
 				// Get comment from future
-				com = f.get();
-				
-				System.out.println("isDone: " + f.isDone());
-//				System.out.println("Com: " + com.toString());
-				
+				com = f.get();				
 				// Get key from comment
 				key = com.getAuthor().trim().toLowerCase();
 				// Get user by key and add comment
@@ -201,11 +197,15 @@ public class ScraperManager {
 		while(itr.hasNext()) {
 			entry = itr.next();
 			Callable<User> analyzeUsers = new AnalyzeUser(entry.getValue());
-			Future<User> callableFuture = cachedPool2.submit(analyzeUsers);
-			analyzedUsers.add(callableFuture);
+			Future<User> callableFuture2 = cachedPool2.submit(analyzeUsers);
+			analyzedUsers.add(callableFuture2);
 		}
 		
 		// shutdown the pool.
+		for(Future<User> f : analyzedUsers) {
+			while(!f.isDone()) { ;; }
+		}
+//		System.out.println("[INFO] Shutting down threads");
 		cachedPool2.shutdown();
 		
 		// Wait for termination
@@ -224,10 +224,6 @@ public class ScraperManager {
 		for(Future<User> f : analyzedUsers) {
 			// Try to get user
 			try {
-				// Wait if not done
-				if(!f.isDone()) {
-					while(!f.isDone()) { ; }
-				}
 				// Get user
 				usr = f.get();
 				// Get key
@@ -238,6 +234,8 @@ public class ScraperManager {
 				e.printStackTrace();
 			}
 		}
+		
+		System.out.println("Moving on....");
 		
 		// Return processed users
 		return processedUsers;

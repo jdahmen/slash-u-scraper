@@ -25,6 +25,7 @@ public class Scraper implements Callable<ConcurrentLinkedQueue<Comment>> {
 		this.username = username;
 	}
 	
+	@SuppressWarnings("unused")
 	@Override
 	public ConcurrentLinkedQueue<Comment> call() {
 		
@@ -242,7 +243,7 @@ public class Scraper implements Callable<ConcurrentLinkedQueue<Comment>> {
 				}
 				
 				// Testing
-				hasNextPage = false;
+				// hasNextPage = false;
 			
 			} while (hasNextPage);
 		}

@@ -1,7 +1,8 @@
 package slashuscraper.object;
 
 import java.time.LocalDate;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 /* Container for comments */
 
@@ -18,7 +19,7 @@ public class Comment {
 	
 	// Store words in a case insensitive format with the word as the
 	// key and the integer frequency as the value
-	private Hashtable<String, Integer> wordFrequency;
+	private Map<String, Word> wordFrequency;
 
 	// constructor
 	public Comment(String url, LocalDate datePosted, int upvotes, int downvotes,
@@ -32,7 +33,7 @@ public class Comment {
 		this.author = author;
 		this.content = content;
 		// Init word frequency
-		this.wordFrequency = new Hashtable<String, Integer>();
+		this.wordFrequency = new HashMap<String, Word>();
 	}
 
 	// get post URL
@@ -79,16 +80,19 @@ public class Comment {
 	public void addWordUsed(String word) {
 		// convert string to lower case for ease of matching
 		String wordUsed = word.trim().toLowerCase();
+		// get element
+		Word wordObj = this.wordFrequency.get(wordUsed);
 		// if the key exists, increment the value, else initialize to 1
-		if(this.wordFrequency.contains(wordUsed)) {
-			this.wordFrequency.put(wordUsed, this.wordFrequency.get(wordUsed) + 1);
+		if(wordObj != null) {
+			wordObj.increment();
+			this.wordFrequency.replace(wordUsed, wordObj);
 		} else {
-			this.wordFrequency.put(wordUsed, 1);
+			this.wordFrequency.put(wordUsed, new Word(wordUsed, 1));
 		}		
 	}
 	
 	// get word frequency
-	public Hashtable<String, Integer> getWordFrequency() {
+	public Map<String, Word> getWordFrequency() {
 		return this.wordFrequency;
 	}
 	
