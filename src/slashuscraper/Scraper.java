@@ -11,6 +11,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import slashuscraper.object.Comment;
+import slashuscraper.object.Post;
 
 public class Scraper implements Runnable {
 	// Scrapes data for a single user
