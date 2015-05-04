@@ -8,7 +8,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+
+import slashuscraper.object.User;
 
 /* Main menu to query user for usernames to scrape */
 
@@ -57,8 +60,10 @@ public class MainMenu {
 		}
 		// if usernames were entered, and no errors occurred, continue
 		if(usernames.size() > 0) {
-			// TODO: scrape information...
-			ScraperManager.scrapeUsers(usernames);
+			// scrape information...
+			List<User> resultList = ScraperManager.scrapeUsers(usernames);
+			// print print results
+			printResults(resultList);
 		}
 	}
 	
@@ -88,6 +93,14 @@ public class MainMenu {
 		}
 		// return list of usernames
 		return usernames;
+	}
+	
+	// print results
+	private static void printResults(List<User> users) {
+		// Get each user from the list
+		for(User user : users) {
+			
+		}
 	}
 
 	// print out a message to show user usages
