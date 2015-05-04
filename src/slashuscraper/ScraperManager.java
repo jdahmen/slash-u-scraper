@@ -38,31 +38,7 @@ public class ScraperManager {
 		
 		// Thread count
 		final int NUMTHREADS = 8;
-/*		
-		// Create a fixed size pool of NUMTHREAD threads that can scrape up to NUMTHREAD
-		// users concurrently
-		// A limited number of threads is good, since the scraping will be rate-limited by the network
-		ExecutorService executor = Executors.newFixedThreadPool(NUMTHREADS);
-
-		System.out.println("There are: " + usernames.size() + " users to be scraped.");
-
-		for (int i = 0; i < usernames.size(); i++) {
-			String username = usernames.get(i);
-
-			// Add user to users list
-			users.put(usernames.get(i).trim().toLowerCase(), 
-					new User(usernames.get(i).trim().toLowerCase()));
-
-			Runnable scraper = new Scraper(username);
-			executor.execute(scraper);
-		}
-		executor.shutdown();
-		
-		while (!executor.isTerminated()) { ; }
-*/	
-		// ----------------------------------------------------------------------------------------------------
-		// ----------------------------------------------------------------------------------------------------
-		
+		// Create a fixed size pool of threads
 		ExecutorService scrapeThreads = Executors.newFixedThreadPool(NUMTHREADS);
 		
 		System.out.println("There are: " + usernames.size() + " users to be scraped.");
@@ -98,14 +74,12 @@ public class ScraperManager {
 				
 				comments.addAll(scrapedUser);
 				
-				// Testing
 				if (scrapedUser == null) {
 					System.out.println("scrapedUser is null.");
 				}
 //				
 //				String testScrapedUser = scrapedUser.toString();
 //				System.out.println(testScrapedUser);
-//				// End Testing
 				
 			} catch (ExecutionException e) {
 				// Error
@@ -116,12 +90,6 @@ public class ScraperManager {
 //		System.out.println("********************************************************************************");
 //		System.out.println("*                                        END GETTING FUTURES FOR USER COMMENTS *");
 //		System.out.println("********************************************************************************");
-		
-//		scrapeThreads.shutdown();
-
-//		while (!scrapeThreads.isTerminated()) { ; }
-		
-		// TODO: Collect comments into queue (above)
 
 		System.out.println("Done scraping!");
 		
@@ -144,7 +112,7 @@ public class ScraperManager {
 			analyzedComments.add(callableFuture);
 		}
 		
-		// shutdown the pool.
+		// Shutdown the pool.
 		cachedPool1.shutdown();
 		
 		// Wait until shutdown complete
@@ -201,11 +169,15 @@ public class ScraperManager {
 			analyzedUsers.add(callableFuture2);
 		}
 		
+<<<<<<< HEAD
 		// shutdown the pool.
 		for(Future<User> f : analyzedUsers) {
 			while(!f.isDone()) { ;; }
 		}
 //		System.out.println("[INFO] Shutting down threads");
+=======
+		// Shutdown the pool.
+>>>>>>> 92eb73d62c0ad192cd459cd527ccda2495457f3a
 		cachedPool2.shutdown();
 		
 		// Wait for termination
