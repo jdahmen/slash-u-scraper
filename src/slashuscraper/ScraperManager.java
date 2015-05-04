@@ -91,7 +91,7 @@ public class ScraperManager {
 //		System.out.println("*                                        END GETTING FUTURES FOR USER COMMENTS *");
 //		System.out.println("********************************************************************************");
 
-		System.out.println("Done scraping!");
+		System.out.println("[COMPLETE] Done scraping");
 		
 		/************************************************************************/
 		/* Analyze comments                                                     */
@@ -169,15 +169,13 @@ public class ScraperManager {
 			analyzedUsers.add(callableFuture2);
 		}
 		
-<<<<<<< HEAD
 		// shutdown the pool.
 		for(Future<User> f : analyzedUsers) {
 			while(!f.isDone()) { ;; }
 		}
 //		System.out.println("[INFO] Shutting down threads");
-=======
+
 		// Shutdown the pool.
->>>>>>> 92eb73d62c0ad192cd459cd527ccda2495457f3a
 		cachedPool2.shutdown();
 		
 		// Wait for termination
@@ -206,8 +204,6 @@ public class ScraperManager {
 				e.printStackTrace();
 			}
 		}
-		
-		System.out.println("Moving on....");
 		
 		// Return processed users
 		return processedUsers;
