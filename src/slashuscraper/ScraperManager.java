@@ -20,6 +20,7 @@ import slashuscraper.object.User;
 
 public class ScraperManager {
 
+	@SuppressWarnings("unused")
 	private ConcurrentLinkedQueue<Comment> comments = new ConcurrentLinkedQueue<Comment>();
 
 	public static List<User> scrapeUsers(ArrayList<String> usernames)
@@ -86,25 +87,25 @@ public class ScraperManager {
 
 		while (!scrapeThreads.isTerminated()) { ; }
 		
-		System.out.println("********************************************************************************");
-		System.out.println("* START GETTING FUTURES FOR USER COMMENTS                                      *");
-		System.out.println("********************************************************************************");
+//		System.out.println("********************************************************************************");
+//		System.out.println("* START GETTING FUTURES FOR USER COMMENTS                                      *");
+//		System.out.println("********************************************************************************");
 		
 		// Get the futures
 		for (Future<ConcurrentLinkedQueue<Comment>> future : toAnalyzeComments) {
 			try {
 				ConcurrentLinkedQueue<Comment> scrapedUser = future.get();
 				
-				// Do something with scrapedUser (a ConcurrentLinkedQueue<Comment> of all the scrapedUser's comments)
+				comments.addAll(scrapedUser);
 				
 				// Testing
 				if (scrapedUser == null) {
 					System.out.println("scrapedUser is null.");
 				}
-				
-				String testScrapedUser = scrapedUser.toString();
-				System.out.println(testScrapedUser);
-				// End Testing
+//				
+//				String testScrapedUser = scrapedUser.toString();
+//				System.out.println(testScrapedUser);
+//				// End Testing
 				
 			} catch (ExecutionException e) {
 				// Error
@@ -112,9 +113,9 @@ public class ScraperManager {
 			}
 		}
 		
-		System.out.println("********************************************************************************");
-		System.out.println("*                                        END GETTING FUTURES FOR USER COMMENTS *");
-		System.out.println("********************************************************************************");
+//		System.out.println("********************************************************************************");
+//		System.out.println("*                                        END GETTING FUTURES FOR USER COMMENTS *");
+//		System.out.println("********************************************************************************");
 		
 //		scrapeThreads.shutdown();
 
@@ -162,7 +163,11 @@ public class ScraperManager {
 			// Clean up name to match up with key
 			try {
 				// Get comment from future
-				com = f.get();				
+				com = f.get();
+				
+				System.out.println("isDone: " + f.isDone());
+//				System.out.println("Com: " + com.toString());
+				
 				// Get key from comment
 				key = com.getAuthor().trim().toLowerCase();
 				// Get user by key and add comment
@@ -219,6 +224,10 @@ public class ScraperManager {
 		for(Future<User> f : analyzedUsers) {
 			// Try to get user
 			try {
+				// Wait if not done
+				if(!f.isDone()) {
+					while(!f.isDone()) { ; }
+				}
 				// Get user
 				usr = f.get();
 				// Get key
@@ -226,6 +235,7 @@ public class ScraperManager {
 			} catch(ExecutionException e) {
 				// Throw error
 				System.out.println("FUTURE_ERROR: Could not get user(s) for future object");
+				e.printStackTrace();
 			}
 		}
 		

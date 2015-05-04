@@ -15,7 +15,7 @@ public class Helper {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 		
 		// Testing
-		System.out.println("Full date: " + sDate);
+//		System.out.println("Full date: " + sDate);
 		
 		return LocalDate.parse(sDate.substring(0, sDate.length()-6), format);
 		

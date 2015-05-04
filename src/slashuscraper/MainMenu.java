@@ -99,7 +99,7 @@ public class MainMenu {
 	private static void printResults(List<User> users) {
 		// Get each user from the list
 		for(User user : users) {
-			
+			System.out.println(user.stats());
 		}
 	}
 

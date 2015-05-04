@@ -64,53 +64,53 @@ public class Scraper implements Callable<ConcurrentLinkedQueue<Comment>> {
 				for (Element element : userCreatedThreads) {
 					
 					data_fullname = element.attr("data-fullname");
-					System.out.println(data_fullname);
+//					System.out.println(data_fullname);
 					
 					score_dislikes = Integer.parseInt(element.select("div[class~=(score dislikes)]").get(0).text());
-					System.out.println(score_dislikes);
+//					System.out.println(score_dislikes);
 					
 					score_unvoted = Integer.parseInt(element.select("div[class~=(score unvoted)]").get(0).text());
-					System.out.println(score_unvoted);
+//					System.out.println(score_unvoted);
 					
 					score_likes = Integer.parseInt(element.select("div[class~=(score likes)]").get(0).text());
-					System.out.println(score_likes);
+//					System.out.println(score_likes);
 					
 					
 					Element title = element.select("a").first();
 					titleLink = title.attr("href");
-					System.out.println(titleLink);
+//					System.out.println(titleLink);
 					
 					titleDescription = element.select("a[href]").get(1).text();
-					System.out.println(titleDescription);
+//					System.out.println(titleDescription);
 					
 					//datetime = element.select("time[title]").first().text();
 					datetime = element.select("time[title]").first().attr("datetime");
-					System.out.println(datetime);
+//					System.out.println(datetime);
 					
 					author = username;
-					System.out.println(author);
+//					System.out.println(author);
 					
 					inSubReddit = element.select("a[class~=(subreddit hover).*").get(0).text();
-					System.out.println(inSubReddit);
+//					System.out.println(inSubReddit);
 					
 					// Testing
 					//System.out.println(element);
-					System.out.println("----------------------------------------------------------------------------------------------------");
+//					System.out.println("----------------------------------------------------------------------------------------------------");
 					
 					// Process data here -->
 					comments.add(new Post(titleLink, titleDescription, Helper.stringToDate(datetime), score_likes,
 					                      score_dislikes, false, inSubReddit, author, ""));
 				}
 				
-				System.out.println("----------------------------------------------------------------------------------------------------");
-				System.out.println("|                                                                                                  |");
-				System.out.println("|                                                                                                  |");
-				System.out.println("|                                                                                                  |");
-				System.out.println("----------------------------------------------------------------------------------------------------");
-				
+//				System.out.println("----------------------------------------------------------------------------------------------------");
+//				System.out.println("|                                                                                                  |");
+//				System.out.println("|                                                                                                  |");
+//				System.out.println("|                                                                                                  |");
+//				System.out.println("----------------------------------------------------------------------------------------------------");
+			
 				
 				// The user being queried commented on a thread created by another user
-				System.out.println("User post is in another user's thread");
+//				System.out.println("User post is in another user's thread");
 				
 				data_fullname = "";
 				titleLink = "";
@@ -132,46 +132,46 @@ public class Scraper implements Callable<ConcurrentLinkedQueue<Comment>> {
 				for (Element element : userPostedInThreads) {
 					
 					data_fullname = element.attr("data-fullname");
-					System.out.println(data_fullname);
+//					System.out.println(data_fullname);
 					
 					threadAuthor = element.select("a[class~=(author ).*").get(0).text();
-					System.out.println(threadAuthor);
+//					System.out.println(threadAuthor);
 					
 					inSubReddit = element.select("a[class~=(subreddit hover).*").get(0).text();
-					System.out.println(inSubReddit);
+//					System.out.println(inSubReddit);
 					
 					score_dislikesStr = element.select("span[class~=(score dislikes)]").get(0).text();
-					System.out.println(score_dislikesStr);
+//					System.out.println(score_dislikesStr);
 					
 					score_unvotedStr = element.select("span[class~=(score unvoted)]").get(0).text();
-					System.out.println(score_unvotedStr);
+//					System.out.println(score_unvotedStr);
 					
 					score_likesStr = element.select("span[class~=(score likes)]").get(0).text();
-					System.out.println(score_likesStr);
+//					System.out.println(score_likesStr);
 					
 					Element title = element.select("a[href]").get(0);
 					titleLink = title.attr("href");
-					System.out.println(titleLink);
+//					System.out.println(titleLink);
 					
 					titleDescription = element.select("a[href]").get(0).text();
-					System.out.println(titleDescription);
+//					System.out.println(titleDescription);
 					
 					//datetime = element.select("time[title]").first().text();
 					datetime = element.select("time[title]").first().attr("datetime");
-					System.out.println(datetime);
+//					System.out.println(datetime);
 					
 					author = username;
-					System.out.println(author);
+//					System.out.println(author);
 					
 					userComment = element.select("div.md").text();
-					System.out.println(userComment);
+//					System.out.println(userComment);
 					
 					subRedditTo = inSubReddit;
-					System.out.println(subRedditTo);
+//					System.out.println(subRedditTo);
 					
 					// For testing
 					//System.out.println(element);
-					System.out.println("----------------------------------------------------------------------------------------------------");
+//					System.out.println("----------------------------------------------------------------------------------------------------");
 					
 					// Add comment to list to be returned
 					comments.add(new Comment(titleLink, Helper.stringToDate(datetime), score_likes, score_dislikes, 
@@ -179,11 +179,11 @@ public class Scraper implements Callable<ConcurrentLinkedQueue<Comment>> {
 					
 				}
 				
-				System.out.println("----------------------------------------------------------------------------------------------------");
-				System.out.println("|                                                                                                  |");
-				System.out.println("|                                                                                                  |");
-				System.out.println("|                                                                                                  |");
-				System.out.println("----------------------------------------------------------------------------------------------------");
+//				System.out.println("----------------------------------------------------------------------------------------------------");
+//				System.out.println("|                                                                                                  |");
+//				System.out.println("|                                                                                                  |");
+//				System.out.println("|                                                                                                  |");
+//				System.out.println("----------------------------------------------------------------------------------------------------");
 				
 				Elements nextPageLink = userPage.select("span[class=nextprev]");
 				// For testing
