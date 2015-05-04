@@ -1,2 +1,2 @@
 # /U Scraper
-CS 475 Project: An informative scrape for reddit user pages
+CS 475 Project: An informative scraper for reddit user pages
