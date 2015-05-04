@@ -37,13 +37,13 @@ public class ScraperManager {
 		
 		// Thread count
 		final int NUMTHREADS = 8;
-		
-		// Create a pool of NUMTHREAD threads that can scrape up to NUMTHREAD
+/*		
+		// Create a fixed size pool of NUMTHREAD threads that can scrape up to NUMTHREAD
 		// users concurrently
+		// A limited number of threads is good, since the scraping will be rate-limited by the network
 		ExecutorService executor = Executors.newFixedThreadPool(NUMTHREADS);
 
-		System.out.println("There are: " + usernames.size()
-				+ " users to be scraped.");
+		System.out.println("There are: " + usernames.size() + " users to be scraped.");
 
 		for (int i = 0; i < usernames.size(); i++) {
 			String username = usernames.get(i);
@@ -56,10 +56,69 @@ public class ScraperManager {
 			executor.execute(scraper);
 		}
 		executor.shutdown();
-
-		while (!executor.isTerminated()) {
-			;
+		
+		while (!executor.isTerminated()) { ; }
+*/	
+		// ----------------------------------------------------------------------------------------------------
+		// ----------------------------------------------------------------------------------------------------
+		
+		ExecutorService scrapeThreads = Executors.newFixedThreadPool(NUMTHREADS);
+		
+		System.out.println("There are: " + usernames.size() + " users to be scraped.");
+		
+		// ConcurrentLinkedQueue<Comment> comments = new ConcurrentLinkedQueue<Comment>();
+		
+		List<Future<ConcurrentLinkedQueue<Comment>>> toAnalyzeComments = new ArrayList<Future<ConcurrentLinkedQueue<Comment>>>();
+		
+		for (int i = 0; i < usernames.size(); i++) {
+			String username = usernames.get(i);
+			
+			// Add user to users list
+			users.put(usernames.get(i).trim().toLowerCase(), new User(usernames.get(i).trim().toLowerCase()));
+			
+			Callable<ConcurrentLinkedQueue<Comment>> scraper = new Scraper(username);
+			Future<ConcurrentLinkedQueue<Comment>> addToComments = scrapeThreads.submit(scraper);
+			
+			toAnalyzeComments.add(addToComments);	
 		}
+		
+		scrapeThreads.shutdown();
+
+		while (!scrapeThreads.isTerminated()) { ; }
+		
+		System.out.println("********************************************************************************");
+		System.out.println("* START GETTING FUTURES FOR USER COMMENTS                                      *");
+		System.out.println("********************************************************************************");
+		
+		// Get the futures
+		for (Future<ConcurrentLinkedQueue<Comment>> future : toAnalyzeComments) {
+			try {
+				ConcurrentLinkedQueue<Comment> scrapedUser = future.get();
+				
+				// Do something with scrapedUser (a ConcurrentLinkedQueue<Comment> of all the scrapedUser's comments)
+				
+				// Testing
+				if (scrapedUser == null) {
+					System.out.println("scrapedUser is null.");
+				}
+				
+				String testScrapedUser = scrapedUser.toString();
+				System.out.println(testScrapedUser);
+				// End Testing
+				
+			} catch (ExecutionException e) {
+				// Error
+				System.out.println("FUTURE_ERROR: Could not 'get' comment from future");
+			}
+		}
+		
+		System.out.println("********************************************************************************");
+		System.out.println("*                                        END GETTING FUTURES FOR USER COMMENTS *");
+		System.out.println("********************************************************************************");
+		
+//		scrapeThreads.shutdown();
+
+//		while (!scrapeThreads.isTerminated()) { ; }
 		
 		// TODO: Collect comments into queue (above)
 

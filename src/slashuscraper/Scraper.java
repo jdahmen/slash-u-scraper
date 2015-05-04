@@ -1,8 +1,8 @@
 package slashuscraper;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.jsoup.Jsoup;
@@ -13,7 +13,8 @@ import org.jsoup.select.Elements;
 import slashuscraper.object.Comment;
 import slashuscraper.object.Post;
 
-public class Scraper implements Runnable {
+//public class Scraper implements Runnable {
+public class Scraper implements Callable<ConcurrentLinkedQueue<Comment>> {
 	// Scrapes data for a single user
 	// scrape page 1 -> get next page id for comments -> scrape page 2 -> get next page id for comments -> etc
 	
@@ -25,7 +26,7 @@ public class Scraper implements Runnable {
 	}
 	
 	@Override
-	public void run() {
+	public ConcurrentLinkedQueue<Comment> call() {
 		
 		String userURL = "http://www.reddit.com/user/" + username;
 		// Testing
@@ -98,7 +99,7 @@ public class Scraper implements Runnable {
 					
 					// Process data here -->
 					comments.add(new Post(titleLink, titleDescription, Helper.stringToDate(datetime), score_likes,
-					                      score_dislikes, false, inSubReddit, author, null));
+					                      score_dislikes, false, inSubReddit, author, ""));
 				}
 				
 				System.out.println("----------------------------------------------------------------------------------------------------");
@@ -173,7 +174,6 @@ public class Scraper implements Runnable {
 					System.out.println("----------------------------------------------------------------------------------------------------");
 					
 					// Add comment to list to be returned
-					// TODO: Fix date handling
 					comments.add(new Comment(titleLink, Helper.stringToDate(datetime), score_likes, score_dislikes, 
 							                 false, inSubReddit, this.username, userComment));
 					
@@ -242,7 +242,7 @@ public class Scraper implements Runnable {
 				}
 				
 				// Testing
-				//hasNextPage = false;
+				hasNextPage = false;
 			
 			} while (hasNextPage);
 		}
@@ -253,6 +253,9 @@ public class Scraper implements Runnable {
 			// requests appear to come from the same IP or the same limited number of IPs. It should work fine on a VPS / etc. 
 			System.out.println("Error when scraping user information for user:" + username + " on page: " + numPagesFetched);
 			e.printStackTrace();
-		}		
+		}
+		
+		// For callable
+		return comments;		
 	}
 }
