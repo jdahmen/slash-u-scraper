@@ -63,10 +63,6 @@ public class ScraperManager {
 
 		while (!scrapeThreads.isTerminated()) { ; }
 		
-//		System.out.println("********************************************************************************");
-//		System.out.println("* START GETTING FUTURES FOR USER COMMENTS                                      *");
-//		System.out.println("********************************************************************************");
-		
 		// Get the futures
 		for (Future<ConcurrentLinkedQueue<Comment>> future : toAnalyzeComments) {
 			try {
@@ -76,27 +72,22 @@ public class ScraperManager {
 				
 				if (scrapedUser == null) {
 					System.out.println("scrapedUser is null.");
-				}
-//				
-//				String testScrapedUser = scrapedUser.toString();
-//				System.out.println(testScrapedUser);
-				
+				}				
 			} catch (ExecutionException e) {
 				// Error
 				System.out.println("FUTURE_ERROR: Could not 'get' comment from future");
 			}
 		}
 		
-//		System.out.println("********************************************************************************");
-//		System.out.println("*                                        END GETTING FUTURES FOR USER COMMENTS *");
-//		System.out.println("********************************************************************************");
-
 		System.out.println("[COMPLETE] Done scraping");
 		
 		/************************************************************************/
 		/* Analyze comments                                                     */
 		/************************************************************************/		
 
+		// Set start time to calculate run time
+		long startTime = System.currentTimeMillis();
+		
 		// Begin analyzing posts and comments
 		// Use a cached thread pool to expand thread count dynamically
 		ExecutorService cachedPool1 = Executors.newCachedThreadPool();
@@ -173,7 +164,6 @@ public class ScraperManager {
 		for(Future<User> f : analyzedUsers) {
 			while(!f.isDone()) { ;; }
 		}
-//		System.out.println("[INFO] Shutting down threads");
 
 		// Shutdown the pool.
 		cachedPool2.shutdown();
@@ -204,6 +194,12 @@ public class ScraperManager {
 				e.printStackTrace();
 			}
 		}
+		
+		// Set end time and then calculate run time
+		long endTime   = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		// Disply run time
+		System.out.println("[STATUS] Calculation time elapsed: " + totalTime +" milliseconds");
 		
 		// Return processed users
 		return processedUsers;

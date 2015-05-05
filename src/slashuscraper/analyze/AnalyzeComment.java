@@ -37,14 +37,6 @@ public class AnalyzeComment implements Callable<Comment> {
 			comment.addWordUsed(s);
 		}
 		
-//		Map<String, Word> wrd = comment.getWordFrequency();
-//		ArrayList<String> wrds = new ArrayList<String>(wrd.keySet());
-		
-//		System.out.println("Output:");
-		
-//		for(String s : wrds) { System.out.print(s + " "); }
-//		System.out.println();
-		
 		// Return processed comment
 		return comment;
 	}

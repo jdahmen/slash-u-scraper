@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 /* Container for reddit user data and statistics */
 
@@ -29,7 +30,7 @@ public class User {
 	
 	// Store frequency of posting, with respect to days of the week
 	// where the day of the week is the key and the rate is the value
-	private Hashtable<Integer, Integer> postRate;
+	private Map<Integer, Day> postRate;
 	
 	// List of user comments to be processed
 	private ArrayList<Comment> userComments;
@@ -42,7 +43,7 @@ public class User {
 		this.userBaseUrl = ("http://www.reddit.com/user/" + username);
 		visitedSubs = new Hashtable<String, Sub>();
 		this.wordFrequency = new Hashtable<String, Word>();
-		this.postRate = new Hashtable<Integer, Integer>();
+		this.postRate = new Hashtable<Integer, Day>();
 		this.userComments = new ArrayList<Comment>();
 	}
 
@@ -110,16 +111,19 @@ public class User {
 	
 	// Increment a day of the week per day comment was created
 	public void addToPostRate(int day) {
+		// Get element
+		Day dayObj = this.postRate.get(day);
 		// if the key exists, increment value, else initialize to 1
-		if(this.postRate.contains(day) && this.postRate.get(day) != null) {
-			this.postRate.replace(day, this.postRate.get(day) + 1);
+		if(dayObj != null) {
+			dayObj.increment();
+			this.postRate.replace(day, dayObj);
 		} else {
-			this.postRate.put(day, 1);
+			this.postRate.put(day, new Day(day, 1));
 		}
 	}
 	
 	// Get the post rate
-	public Hashtable<Integer, Integer> getPostRate() {
+	public Map<Integer, Day> getPostRate() {
 		return this.postRate;
 	}
 
@@ -177,11 +181,22 @@ public class User {
 	public String stats() {
 		
 		// Remove common words from map
-		String[] commonWords = {"a","the","you","to","of","and","i",
-				"it","is","your","that","if","for","in","are","this"};
-		for(String cw : commonWords) {
-			wordFrequency.remove(cw);
-		}
+//		String[] commonWords = {"a","the","you","to","of","and","i",
+//				"it","is","your","that","if","for","in","are","this"};
+//		for(String cw : commonWords) {
+//			wordFrequency.remove(cw);
+//		}
+		
+		// Generate dictionary of days
+		List<Day> days = new ArrayList<Day>(postRate.values());
+		
+		// Sort dictionary by frequency
+		Collections.sort(days, new Comparator<Day>() {
+			@Override
+			public int compare(Day d1, Day d2) {
+				return ( d2.getCount() - d1.getCount() );
+			}			
+		});
 		
 		// Generate dictionary
 		List<Word> words = new ArrayList<Word>(wordFrequency.values());
@@ -214,6 +229,14 @@ public class User {
 		sb.append("URL:  " + this.userBaseUrl + "\n");
 		sb.append("Active since: " + this.joinDate.toString() + "\n");
 		
+		sb.append("Days of the week most active: \n");
+		
+		// Append days of the week the user is most active
+		for(int i = 0; i < 7 && i < postRate.size(); i++) {
+			sb.append("    " + days.get(i).getDayName()
+					+ " (" + days.get(i).getCount() + ")\n");
+		}
+		
 		sb.append("Most frequency used words: \n");
 		
 		// Append most commonly used words
@@ -228,13 +251,8 @@ public class User {
 		for(int i = 0; i < 10 && i < subs.size(); i++) {
 			sb.append("    " + (i+1) + ". " + subs.get(i).getSub()
 					+ " (" + subs.get(i).getCount() + ")\n");
-		}
-		
+		}		
 		sb.append("\n");
-		
-//		for(Word w : words) {
-//			System.out.println("Word: " + w.getWord() + "(" + w.getCount() + ")\n");
-//		}
 		
 		// Return string
 		return sb.toString();
