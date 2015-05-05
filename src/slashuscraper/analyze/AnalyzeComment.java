@@ -10,7 +10,7 @@ import slashuscraper.object.Comment;
 
 public class AnalyzeComment implements Callable<Comment> {
 
-	// Locally stored comments to be analyzed
+	// Locally stored comment to be analyzed
 	private Comment comment = null;
 	
 	// Main constructor
@@ -32,7 +32,7 @@ public class AnalyzeComment implements Callable<Comment> {
 		// Omit punctuation, convert all to lower case, and split by space
 		String[] words = comment.getContent().toLowerCase().replaceAll(
 				"[^A-Za-z\\s+]", "").split("\\s+");		
-		// Traverse words and
+		// Traverse words
 		for(String s : words) {
 			comment.addWordUsed(s);
 		}

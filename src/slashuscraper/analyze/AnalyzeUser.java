@@ -75,5 +75,4 @@ public class AnalyzeUser implements Callable<User> {
 		// Return processed user
 		return this.user;
 	}
-
 }

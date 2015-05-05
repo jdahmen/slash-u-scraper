@@ -160,7 +160,7 @@ public class ScraperManager {
 			analyzedUsers.add(callableFuture2);
 		}
 		
-		// shutdown the pool.
+		// Shutdown the pool.
 		for(Future<User> f : analyzedUsers) {
 			while(!f.isDone()) { ;; }
 		}
