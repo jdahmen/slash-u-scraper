@@ -1,0 +1,62 @@
+Slash U Scraper
+Please enter username(s): mattbc
+
+There are: 1 users to be scraped.
+Connecting to URL: http://www.reddit.com/user/mattbc
+Retrieved user: mattbc page: 1
+Sleeping: 8 seconds.
+Connecting to URL: http://www.reddit.com/user/mattbc?count=25&after=t1_cgdydfk
+Retrieved user: mattbc page: 2
+Sleeping: 5 seconds.
+Connecting to URL: http://www.reddit.com/user/mattbc?count=50&after=t1_cfnhgd1
+Retrieved user: mattbc page: 3
+Sleeping: 7 seconds.
+Connecting to URL: http://www.reddit.com/user/mattbc?count=75&after=t1_cf5n4vm
+org.jsoup.HttpStatusException: HTTP error fetching URL. Status=429, URL=http://www.reddit.com/user/mattbc?count=75&after=t1_cf5n4vm
+Error when scraping user information for user:mattbc on page: 3
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:537)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:493)
+	at org.jsoup.helper.HttpConnection.execute(HttpConnection.java:205)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:194)
+	at slashuscraper.Scraper.call(Scraper.java:51)
+	at slashuscraper.Scraper.call(Scraper.java:1)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+[COMPLETE] Done scraping
+[COMPLETE] Done processing comments
+[COMPLETE] Done matching comments with users
+[COMPLETE] Done analyzing users
+[STATUS] Calculation time elapsed: 161 milliseconds
+User: mattbc
+URL:  http://www.reddit.com/user/mattbc
+Active since: 2014-02-02
+Days of the week most active: 
+    Friday (15)
+    Saturday (13)
+    Thursday (13)
+    Tuesday (10)
+    Monday (10)
+    Sunday (8)
+    Wednesday (6)
+Most frequency used words: 
+    1. the (287)
+    2. to (199)
+    3. a (176)
+    4. of (142)
+    5. you (137)
+    6. and (130)
+    7. is (94)
+    8. in (94)
+    9. for (86)
+    10. that (78)
+Most actively participated subreddits: 
+    1. crohnsdisease (66)
+    2. ama (3)
+    3. science (1)
+    4. cosmos (1)
+    5. iwantout (1)
+    6. bicycling (1)
+    7. portland (1)
+    8. nerdfighters (1)

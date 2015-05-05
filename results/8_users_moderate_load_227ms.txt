@@ -1,0 +1,426 @@
+Slash U Scraper
+Please enter username(s): gmunetwork sfsdfd mattbc ipaqmaster allzuckedup daemonfly 3uphemism greynol5
+
+There are: 8 users to be scraped.
+Connecting to URL: http://www.reddit.com/user/ipaqmaster
+Connecting to URL: http://www.reddit.com/user/sfsdfd
+Connecting to URL: http://www.reddit.com/user/mattbc
+Connecting to URL: http://www.reddit.com/user/gmunetwork
+Connecting to URL: http://www.reddit.com/user/allzuckedup
+Connecting to URL: http://www.reddit.com/user/3uphemism
+Connecting to URL: http://www.reddit.com/user/daemonfly
+Connecting to URL: http://www.reddit.com/user/greynol5
+Retrieved user: 3uphemism page: 1
+Retrieved user: sfsdfd page: 1
+Retrieved user: greynol5 page: 1
+Retrieved user: ipaqmaster page: 1
+Retrieved user: mattbc page: 1
+Retrieved user: allzuckedup page: 1
+Sleeping: 6 seconds.
+Sleeping: 7 seconds.
+Sleeping: 4 seconds.
+Sleeping: 3 seconds.
+Sleeping: 4 seconds.
+Sleeping: 6 seconds.
+Retrieved user: daemonfly page: 1
+Sleeping: 4 seconds.
+Connecting to URL: http://www.reddit.com/user/3uphemism?count=25&after=t1_co2me0n
+Connecting to URL: http://www.reddit.com/user/sfsdfd?count=25&after=t1_cqt9pi5
+Connecting to URL: http://www.reddit.com/user/ipaqmaster?count=25&after=t1_cqylper
+Retrieved user: sfsdfd page: 2
+Sleeping: 9 seconds.
+Connecting to URL: http://www.reddit.com/user/daemonfly?count=25&after=t1_cpltc5o
+Retrieved user: ipaqmaster page: 2
+Sleeping: 6 seconds.
+Connecting to URL: http://www.reddit.com/user/greynol5?count=25&after=t1_codma0j
+Connecting to URL: http://www.reddit.com/user/allzuckedup?count=25&after=t1_cmik6l8
+Retrieved user: allzuckedup page: 2
+Sleeping: 8 seconds.
+Connecting to URL: http://www.reddit.com/user/mattbc?count=25&after=t1_cgdydfk
+Retrieved user: mattbc page: 2
+Sleeping: 3 seconds.
+Retrieved user: gmunetwork page: 1
+Sleeping: 5 seconds.
+Connecting to URL: http://www.reddit.com/user/mattbc?count=50&after=t1_cfnhgd1
+Connecting to URL: http://www.reddit.com/user/ipaqmaster?count=50&after=t1_cqxn2v2
+Retrieved user: ipaqmaster page: 3
+Sleeping: 9 seconds.
+Connecting to URL: http://www.reddit.com/user/gmunetwork?count=25&after=t1_ck8zjel
+Connecting to URL: http://www.reddit.com/user/sfsdfd?count=50&after=t1_cqov09o
+org.jsoup.HttpStatusException: HTTP error fetching URL. Status=429, URL=http://www.reddit.com/user/sfsdfd?count=50&after=t1_cqov09o
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:537)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:493)
+	at org.jsoup.helper.HttpConnection.execute(HttpConnection.java:205)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:194)
+	at slashuscraper.Scraper.call(Scraper.java:51)
+	at slashuscraper.Scraper.call(Scraper.java:1)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Error when scraping user information for user:sfsdfd on page: 2
+Retrieved user: gmunetwork page: 2
+Sleeping: 8 seconds.
+Retrieved user: 3uphemism page: 2
+Sleeping: 7 seconds.
+Connecting to URL: http://www.reddit.com/user/allzuckedup?count=50&after=t1_clmsdid
+org.jsoup.HttpStatusException: HTTP error fetching URL. Status=503, URL=http://www.reddit.com/user/daemonfly?count=25&after=t1_cpltc5o
+Error when scraping user information for user:daemonfly on page: 1
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:537)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:493)
+	at org.jsoup.helper.HttpConnection.execute(HttpConnection.java:205)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:194)
+	at slashuscraper.Scraper.call(Scraper.java:51)
+	at slashuscraper.Scraper.call(Scraper.java:1)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Error when scraping user information for user:allzuckedup on page: 2
+org.jsoup.HttpStatusException: HTTP error fetching URL. Status=429, URL=http://www.reddit.com/user/allzuckedup?count=50&after=t1_clmsdid
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:537)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:493)
+	at org.jsoup.helper.HttpConnection.execute(HttpConnection.java:205)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:194)
+	at slashuscraper.Scraper.call(Scraper.java:51)
+	at slashuscraper.Scraper.call(Scraper.java:1)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+org.jsoup.HttpStatusException: HTTP error fetching URL. Status=429, URL=http://www.reddit.com/user/greynol5?count=25&after=t1_codma0j
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:537)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:493)
+	at org.jsoup.helper.HttpConnection.execute(HttpConnection.java:205)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:194)
+	at slashuscraper.Scraper.call(Scraper.java:51)
+	at slashuscraper.Scraper.call(Scraper.java:1)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Error when scraping user information for user:greynol5 on page: 1
+Connecting to URL: http://www.reddit.com/user/ipaqmaster?count=75&after=t1_cqxi6u7
+org.jsoup.HttpStatusException: HTTP error fetching URL. Status=429, URL=http://www.reddit.com/user/ipaqmaster?count=75&after=t1_cqxi6u7
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:537)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:493)
+	at org.jsoup.helper.HttpConnection.execute(HttpConnection.java:205)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:194)
+	at slashuscraper.Scraper.call(Scraper.java:51)
+	at slashuscraper.Scraper.call(Scraper.java:1)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Error when scraping user information for user:ipaqmaster on page: 3
+Connecting to URL: http://www.reddit.com/user/3uphemism?count=50&after=t1_cm3ctq6
+Retrieved user: mattbc page: 3
+Sleeping: 5 seconds.
+Error when scraping user information for user:3uphemism on page: 2
+org.jsoup.HttpStatusException: HTTP error fetching URL. Status=429, URL=http://www.reddit.com/user/3uphemism?count=50&after=t1_cm3ctq6
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:537)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:493)
+	at org.jsoup.helper.HttpConnection.execute(HttpConnection.java:205)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:194)
+	at slashuscraper.Scraper.call(Scraper.java:51)
+	at slashuscraper.Scraper.call(Scraper.java:1)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Connecting to URL: http://www.reddit.com/user/gmunetwork?count=50&after=t1_cc9k5dn
+org.jsoup.HttpStatusException: HTTP error fetching URL. Status=429, URL=http://www.reddit.com/user/gmunetwork?count=50&after=t1_cc9k5dn
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:537)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:493)
+	at org.jsoup.helper.HttpConnection.execute(HttpConnection.java:205)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:194)
+	at slashuscraper.Scraper.call(Scraper.java:51)
+	at slashuscraper.Scraper.call(Scraper.java:1)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Error when scraping user information for user:gmunetwork on page: 2
+Connecting to URL: http://www.reddit.com/user/mattbc?count=75&after=t1_cf5n4vm
+Retrieved user: mattbc page: 4
+Sleeping: 5 seconds.
+Connecting to URL: http://www.reddit.com/user/mattbc?count=100&after=t1_cesgd6k
+Retrieved user: mattbc page: 5
+Sleeping: 8 seconds.
+Connecting to URL: http://www.reddit.com/user/mattbc?count=125&after=t1_celf6v2
+Error when scraping user information for user:mattbc on page: 5
+org.jsoup.HttpStatusException: HTTP error fetching URL. Status=503, URL=http://www.reddit.com/user/mattbc?count=125&after=t1_celf6v2
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:537)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:493)
+	at org.jsoup.helper.HttpConnection.execute(HttpConnection.java:205)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:194)
+	at slashuscraper.Scraper.call(Scraper.java:51)
+	at slashuscraper.Scraper.call(Scraper.java:1)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+[COMPLETE] Done scraping
+[COMPLETE] Done processing comments
+[COMPLETE] Done matching comments with users
+[COMPLETE] Done analyzing users
+[STATUS] Calculation time elapsed: 227 milliseconds
+User: sfsdfd
+URL:  http://www.reddit.com/user/sfsdfd
+Active since: 2015-04-25
+Days of the week most active: 
+    Sunday (14)
+    Saturday (13)
+    Wednesday (10)
+    Tuesday (6)
+    Monday (4)
+    Friday (3)
+Most frequency used words: 
+    1. the (332)
+    2. to (216)
+    3. of (208)
+    4. a (195)
+    5. and (175)
+    6. that (159)
+    7. is (112)
+    8. i (100)
+    9. you (82)
+    10. in (67)
+Most actively participated subreddits: 
+    1. technology (13)
+    2. intellectualproperty (9)
+    3. tifu (8)
+    4. apple (6)
+    5. pics (3)
+    6. politics (2)
+    7. gmu (2)
+    8. patents (2)
+    9. news (2)
+    10. necrodancer (1)
+
+
+User: allzuckedup
+URL:  http://www.reddit.com/user/allzuckedup
+Active since: 2014-10-28
+Days of the week most active: 
+    Wednesday (11)
+    Monday (7)
+    Sunday (6)
+    Saturday (6)
+    Thursday (6)
+    Tuesday (6)
+    Friday (3)
+Most frequency used words: 
+    1. the (94)
+    2. a (72)
+    3. and (54)
+    4. to (53)
+    5. of (47)
+    6. i (45)
+    7. that (40)
+    8. in (37)
+    9. you (35)
+    10. for (33)
+Most actively participated subreddits: 
+    1. homelab (6)
+    2. denver (5)
+    3. relationships (4)
+    4. asknetsec (4)
+    5. explainlikeimfive (3)
+    6. todayilearned (3)
+    7. askreddit (3)
+    8. adviceanimals (3)
+    9. news (3)
+    10. colorado (2)
+
+
+User: gmunetwork
+URL:  http://www.reddit.com/user/gmunetwork
+Active since: 2013-09-16
+Days of the week most active: 
+    Monday (11)
+    Friday (10)
+    Thursday (10)
+    Wednesday (10)
+    Tuesday (9)
+Most frequency used words: 
+    1. the (119)
+    2. to (93)
+    3. you (69)
+    4. a (57)
+    5. and (54)
+    6. have (37)
+    7. is (36)
+    8. if (35)
+    9. we (33)
+    10. wireless (31)
+Most actively participated subreddits: 
+    1. gmu (47)
+    2. /r/gmu (3)
+
+
+User: ipaqmaster
+URL:  http://www.reddit.com/user/ipaqmaster
+Active since: 2015-05-03
+Days of the week most active: 
+    Tuesday (33)
+    Monday (31)
+    Sunday (11)
+Most frequency used words: 
+    1. the (63)
+    2. it (51)
+    3. i (42)
+    4. to (41)
+    5. a (37)
+    6. that (35)
+    7. you (31)
+    8. and (31)
+    9. of (25)
+    10. is (22)
+Most actively participated subreddits: 
+    1. pcmasterrace (18)
+    2. funny (13)
+    3. askreddit (12)
+    4. todayilearned (7)
+    5. homelab (5)
+    6. rickandmorty (3)
+    7. firstworldanarchists (3)
+    8. gifs (3)
+    9. trendingsubreddits (2)
+    10. admincraft (2)
+
+
+User: mattbc
+URL:  http://www.reddit.com/user/mattbc
+Active since: 2014-01-09
+Days of the week most active: 
+    Thursday (30)
+    Friday (22)
+    Saturday (19)
+    Tuesday (16)
+    Monday (16)
+    Wednesday (12)
+    Sunday (10)
+Most frequency used words: 
+    1. the (479)
+    2. to (337)
+    3. a (268)
+    4. of (240)
+    5. you (212)
+    6. and (199)
+    7. is (167)
+    8. in (153)
+    9. i (148)
+    10. for (131)
+Most actively participated subreddits: 
+    1. crohnsdisease (113)
+    2. ama (3)
+    3. tinyhouses (2)
+    4. science (1)
+    5. portland (1)
+    6. nerdfighters (1)
+    7. bicycling (1)
+    8. cosmos (1)
+    9. raisedbynarcissists (1)
+    10. iwantout (1)
+
+
+User: greynol5
+URL:  http://www.reddit.com/user/greynol5
+Active since: 2015-02-06
+Days of the week most active: 
+    Monday (7)
+    Friday (4)
+    Wednesday (4)
+    Thursday (3)
+    Sunday (2)
+    Saturday (2)
+    Tuesday (2)
+Most frequency used words: 
+    1. i (38)
+    2. the (22)
+    3. to (19)
+    4. a (19)
+    5. you (17)
+    6. and (16)
+    7. it (15)
+    8. your (12)
+    9. in (12)
+    10. of (10)
+Most actively participated subreddits: 
+    1. gmu (4)
+    2. nova (3)
+    3. iama (2)
+    4. thebutton (2)
+    5. foodporn (2)
+    6. greeklife (1)
+    7. randomactsofpizza (1)
+    8. virginia (1)
+    9. soylent (1)
+    10. getemployed (1)
+
+
+User: daemonfly
+URL:  http://www.reddit.com/user/daemonfly
+Active since: 2015-03-20
+Days of the week most active: 
+    Sunday (13)
+    Tuesday (6)
+    Wednesday (2)
+    Friday (1)
+    Thursday (1)
+    Monday (1)
+Most frequency used words: 
+    1. i (21)
+    2. a (19)
+    3. the (17)
+    4. it (14)
+    5. and (13)
+    6. to (11)
+    7. just (11)
+    8. for (10)
+    9. you (9)
+    10. but (8)
+Most actively participated subreddits: 
+    1. diy (5)
+    2. sysadmin (3)
+    3. privacy (3)
+    4. tall (3)
+    5. modelmakers (2)
+    6. anime (2)
+    7. grandtheftautov (1)
+    8. homelab (1)
+    9. basebuildinggames (1)
+    10. opensource (1)
+
+
+User: 3uphemism
+URL:  http://www.reddit.com/user/3uphemism
+Active since: 2014-11-15
+Days of the week most active: 
+    Wednesday (20)
+    Tuesday (10)
+    Sunday (5)
+    Monday (5)
+    Thursday (4)
+    Friday (2)
+    Saturday (1)
+Most frequency used words: 
+    1. the (30)
+    2. to (25)
+    3. done (19)
+    4. a (19)
+    5. and (15)
+    6. in (12)
+    7. is (11)
+    8. you (11)
+    9. for (10)
+    10. it (10)
+Most actively participated subreddits: 
+    1. gmu (40)
+    2. /r/gmu (3)
+    3. bicycling (2)
+    4. baking (1)
+    5. pizza (1)
+
+

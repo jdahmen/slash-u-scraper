@@ -1,0 +1,133 @@
+Slash U Scraper
+Please enter username(s): sfsdfd mattbc
+
+There are: 2 users to be scraped.
+Connecting to URL: http://www.reddit.com/user/sfsdfd
+Connecting to URL: http://www.reddit.com/user/mattbc
+Retrieved user: mattbc page: 1
+Sleeping: 4 seconds.
+Retrieved user: sfsdfd page: 1
+Sleeping: 9 seconds.
+Connecting to URL: http://www.reddit.com/user/mattbc?count=25&after=t1_cgdydfk
+Retrieved user: mattbc page: 2
+Sleeping: 6 seconds.
+Connecting to URL: http://www.reddit.com/user/sfsdfd?count=25&after=t1_cqt9pi5
+Retrieved user: sfsdfd page: 2
+Sleeping: 8 seconds.
+Connecting to URL: http://www.reddit.com/user/mattbc?count=50&after=t1_cfnhgd1
+Connecting to URL: http://www.reddit.com/user/sfsdfd?count=50&after=t1_cqov09o
+Retrieved user: sfsdfd page: 3
+Sleeping: 9 seconds.
+Retrieved user: mattbc page: 3
+Sleeping: 9 seconds.
+Connecting to URL: http://www.reddit.com/user/sfsdfd?count=75&after=t1_cqjx5rh
+Retrieved user: sfsdfd page: 4
+Sleeping: 4 seconds.
+Connecting to URL: http://www.reddit.com/user/mattbc?count=75&after=t1_cf5n4vm
+Retrieved user: mattbc page: 4
+Sleeping: 8 seconds.
+Connecting to URL: http://www.reddit.com/user/sfsdfd?count=100&after=t1_cq89axo
+Retrieved user: sfsdfd page: 5
+Sleeping: 3 seconds.
+Connecting to URL: http://www.reddit.com/user/sfsdfd?count=125&after=t1_cpz0hvl
+Error when scraping user information for user:sfsdfd on page: 5
+org.jsoup.HttpStatusException: HTTP error fetching URL. Status=429, URL=http://www.reddit.com/user/sfsdfd?count=125&after=t1_cpz0hvl
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:537)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:493)
+	at org.jsoup.helper.HttpConnection.execute(HttpConnection.java:205)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:194)
+	at slashuscraper.Scraper.call(Scraper.java:51)
+	at slashuscraper.Scraper.call(Scraper.java:1)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Connecting to URL: http://www.reddit.com/user/mattbc?count=100&after=t1_cesgd6k
+Retrieved user: mattbc page: 5
+Sleeping: 6 seconds.
+Connecting to URL: http://www.reddit.com/user/mattbc?count=125&after=t1_celf6v2
+org.jsoup.HttpStatusException: HTTP error fetching URL. Status=429, URL=http://www.reddit.com/user/mattbc?count=125&after=t1_celf6v2
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:537)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:493)
+	at org.jsoup.helper.HttpConnection.execute(HttpConnection.java:205)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:194)
+	at slashuscraper.Scraper.call(Scraper.java:51)
+	at slashuscraper.Scraper.call(Scraper.java:1)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Error when scraping user information for user:mattbc on page: 5
+[COMPLETE] Done scraping
+[COMPLETE] Done processing comments
+[COMPLETE] Done matching comments with users
+[COMPLETE] Done analyzing users
+[STATUS] Calculation time elapsed: 240 milliseconds
+User: sfsdfd
+URL:  http://www.reddit.com/user/sfsdfd
+Active since: 2015-04-02
+Days of the week most active: 
+    Saturday (26)
+    Tuesday (23)
+    Wednesday (21)
+    Sunday (16)
+    Friday (16)
+    Thursday (11)
+    Monday (10)
+Most frequency used words: 
+    1. the (792)
+    2. of (443)
+    3. a (378)
+    4. to (375)
+    5. and (357)
+    6. that (335)
+    7. is (239)
+    8. you (187)
+    9. in (185)
+    10. i (162)
+Most actively participated subreddits: 
+    1. technology (32)
+    2. intellectualproperty (20)
+    3. news (11)
+    4. gmu (11)
+    5. apple (10)
+    6. askreddit (9)
+    7. tifu (8)
+    8. pics (3)
+    9. programming (3)
+    10. politics (3)
+
+
+User: mattbc
+URL:  http://www.reddit.com/user/mattbc
+Active since: 2014-01-09
+Days of the week most active: 
+    Thursday (30)
+    Friday (22)
+    Saturday (19)
+    Tuesday (16)
+    Monday (16)
+    Wednesday (12)
+    Sunday (10)
+Most frequency used words: 
+    1. the (479)
+    2. to (337)
+    3. a (268)
+    4. of (240)
+    5. you (212)
+    6. and (199)
+    7. is (167)
+    8. in (153)
+    9. i (148)
+    10. for (131)
+Most actively participated subreddits: 
+    1. crohnsdisease (113)
+    2. ama (3)
+    3. tinyhouses (2)
+    4. science (1)
+    5. portland (1)
+    6. nerdfighters (1)
+    7. bicycling (1)
+    8. cosmos (1)
+    9. raisedbynarcissists (1)
+    10. iwantout (1)
