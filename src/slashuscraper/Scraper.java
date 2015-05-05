@@ -48,7 +48,9 @@ public class Scraper implements Callable<ConcurrentLinkedQueue<Comment>> {
 				System.out.println("Connecting to URL: " + userURL);
 				// Set random port to help diminish 429 errors
 				System.setProperty("http.proxyPort", String.valueOf((rand.nextInt() % 1000) + 5000));
-				userPage =  Jsoup.connect( userURL ).timeout(50000).get();
+				userPage =  Jsoup.connect( userURL )
+						  .userAgent("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36")
+					      .referrer("http://www.google.com").timeout(50000).get();
 				// Maybe consider randomized user agent, assuming reddit doesn't look solely at IP address
 				numPagesFetched++;
 				// Testing
